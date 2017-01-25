@@ -1,4 +1,18 @@
-h1 {
-  color: darken(grey, 20);
-  font-size: 40px;
+$base-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$base-font-size: 30px;
+
+html {
+  font-size: $base-font-size;
+  -webkit-font-smoothing: antialiased;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: $base-font;
+}
+
+.container {
+  width: 100%;
+  text-align: center;
 }
