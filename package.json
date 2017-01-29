@@ -1,5 +1,5 @@
 {
-  "name": "countdown to x",
+  "name": "countdown-to-x",
   "version": "1.0.0",
   "description": "countdown to x",
   "main": "webpack.config.js",

@@ -1,9 +1,13 @@
-export const TIMEUNIT = {
-    default: 'minutes',
-    options: ['seconds', 'minutes', 'hours', 'days']
-}
+export default class DropdownOptions {
 
-export const ENDUNIT = {
-    default: 'today',
-    options: ['today', 'this week', 'this month', 'this year']
+    static TIME_UNIT = {
+        default: 'minutes',
+        options: ['seconds', 'minutes', 'hours', 'days']
+    }
+
+    static END_UNIT = {
+        default: 'today',
+        options: ['today', 'this week', 'this month', 'this year']
+    }
+
 }

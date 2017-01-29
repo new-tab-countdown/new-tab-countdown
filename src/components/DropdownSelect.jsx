@@ -1,24 +1,25 @@
 import React from 'react';
+import DropdownOptions from '../constants/dropdownOptions.js';
 
-const DropdownSelect = ({options, onChange}) => {
+const DropdownSelect = ({dropdownOptions, onChange}) => {
 
     const handleChange = (event) => {
         onChange(event.target.value);
     };
 
-    const dropdownOptions = (options).map(
+    const options = (dropdownOptions.options).map(
         (option, i) => <option key={i} value={option}>{option}</option>
     );
 
     return (
-        <select onChange={handleChange}>
-            {dropdownOptions}
+        <select defaultValue={dropdownOptions.default} onChange={handleChange}>
+            {options}
         </select>
     );
 };
 
 DropdownSelect.propTypes = {
-    options: React.PropTypes.array.isRequired,
+    dropdownOptions: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func
 };
 
