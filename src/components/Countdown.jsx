@@ -12,8 +12,8 @@ export default class Countdown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            timeUnit: DropdownOptions.TIME_UNIT.default,
-            endUnit: DropdownOptions.END_UNIT.default,
+            timeUnit: DropdownOptions.TIME_OPTIONS.defaultValue,
+            endUnit: DropdownOptions.END_OPTIONS.defaultValue,
             now: (new Date()).getTime()
         };
     }
@@ -35,17 +35,16 @@ export default class Countdown extends Component {
             this.state.now,
             this.state.endUnit
         );
-        console.info(this.state);
         return (
             <div className="main">
                 There are {ms}
                 <DropdownSelect
-                    dropdownOptions={DropdownOptions.TIME_UNIT}
+                    dropdownOptions={DropdownOptions.TIME_OPTIONS}
                     onChange={this.changeTimeUnit.bind(this)}
                 />
                 remaining
                 <DropdownSelect
-                    dropdownOptions={DropdownOptions.END_UNIT}
+                    dropdownOptions={DropdownOptions.END_OPTIONS}
                     onChange={this.changeEndUnit.bind(this)}
                 />.
             </div>

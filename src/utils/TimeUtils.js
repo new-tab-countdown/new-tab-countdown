@@ -11,7 +11,6 @@ const MILLISECONDS_IN_MINUTE = SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
 export default class TimeUtils {
 
     static computeTimeRemaining(timeUnit, now, endUnit) {
-        console.info(`computeTimeRemaining... ${typeof now}, ${endUnit}`);
         let ms = this.computeTimeRemainingMill(now, endUnit);
         switch(timeUnit) {
             case 'seconds':
@@ -22,23 +21,6 @@ export default class TimeUtils {
                 return ms / MILLISECONDS_IN_HOUR;
             case 'days':
                 return ms / MILLISECONDS_IN_DAY;
-        }
-    }
-
-    static computeTimeRemainingMill(endUnit) {
-        let now = new Date();
-        console.info(`computeTimeRemainingMill... ${endUnit}`);
-        switch(endUnit) {
-            case 'today':
-                console.info("tomorrow: " + EndDates.getStartOfTomorrow(now));
-                console.info("now: " + now);
-                return EndDates.getStartOfTomorrow(now) - now;
-            case 'this week':
-                return EndDates.getStartOfNextWeek(now) - now;
-            case 'this month':
-                return EndDates.getStartOfNextMonth(now) - now;
-            case 'this year':
-                return EndDates.getStartOfNextYear(now) - now;
         }
     }
 
