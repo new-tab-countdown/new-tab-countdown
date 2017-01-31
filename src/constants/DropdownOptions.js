@@ -1,5 +1,5 @@
-import { SECOND, MINUTE, HOUR, DAY } from './TimeValues';
-import { TODAY, WEEK, MONTH, YEAR } from './EndValues';
+import { SECOND, MINUTE, HOUR, DAY } from './TimeOptions';
+import { TODAY, WEEK, MONTH, YEAR } from './DateOptions';
 
 export const DROPDOWN_OPTIONS = {
 
@@ -8,7 +8,7 @@ export const DROPDOWN_OPTIONS = {
         options: [SECOND, MINUTE, HOUR, DAY]
     },
 
-    endOptions: {
+    dateOptions: {
         defaultValue: TODAY,
         options: [TODAY, WEEK, MONTH, YEAR]
     }

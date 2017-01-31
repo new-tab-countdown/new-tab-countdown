@@ -1,11 +1,15 @@
 import React from 'react';
-import DropdownOptions from '../constants/DropdownOptions.js';
+import DropdownOptions from '../constants/DropdownOptions';
 
 const DropdownSelect = ({dropdownOptions, onChange}) => {
 
     const handleChange = (event) => {
-        console.info(event);
-        onChange(event.target.value);
+        let value = event.target.value;
+        let newOption = dropdownOptions.options.find(
+            (option) => option.displayName === value
+        );
+        console.info(newOption); 
+        onChange(newOption);
     };
 
     const options = (dropdownOptions.options).map(

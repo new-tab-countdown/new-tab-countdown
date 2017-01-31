@@ -1,4 +1,4 @@
-export default class EndDates {
+export default class DateCalculator {
 
     static getStartOfTomorrow() {
         let now = new Date();
