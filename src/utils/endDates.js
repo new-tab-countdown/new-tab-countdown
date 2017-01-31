@@ -7,7 +7,7 @@ export default class EndDates {
             now.getMonth(),
             now.getDate() + 1
         );
-        return tomorrow.getTime(); 
+        return tomorrow.getTime();
     }
 
     static getStartOfNextWeek() {

@@ -6,22 +6,22 @@ const MILLISECONDS_IN_MINUTE = SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
 const MILLISECONDS_IN_HOUR = MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
 const MILLISECONDS_IN_DAY = HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
 
-export default const SECOND = {
+export const SECOND = {
     displayName: 'seconds',
     convertFromMill: MILLISECONDS_IN_SECOND
 }
 
-export default const MINUTE = {
+export const MINUTE = {
     displayName: 'minutes',
     convertFromMill: MILLISECONDS_IN_MINUTE
 }
 
-export default const HOUR = {
+export const HOUR = {
     displayName: 'hours',
     convertFromMill: MILLISECONDS_IN_HOUR
 }
 
-export default const DAY = {
+export const DAY = {
     displayName: 'days',
     convertFromMill: MILLISECONDS_IN_DAY
 }

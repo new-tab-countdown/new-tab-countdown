@@ -1,13 +1,16 @@
-export default class DropdownOptions {
+import { SECOND, MINUTE, HOUR, DAY } from './TimeValues';
+import { TODAY, WEEK, MONTH, YEAR } from './EndValues';
 
-    static TIME_OPTIONS = {
-        defaultValue: 'minutes',
-        options: ['seconds', 'minutes', 'hours', 'days']
-    }
+export const DROPDOWN_OPTIONS = {
 
-    static END_OPTIONS = {
-        defaultValue: 'today',
-        options: ['today', 'this week', 'this month', 'this year']
+    timeOptions: {
+        defaultValue: MINUTE,
+        options: [SECOND, MINUTE, HOUR, DAY]
+    },
+
+    endOptions: {
+        defaultValue: TODAY,
+        options: [TODAY, WEEK, MONTH, YEAR]
     }
 
 }

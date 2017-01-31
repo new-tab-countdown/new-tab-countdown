@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DropdownSelect from './DropdownSelect.jsx';
-import DropdownOptions from '../constants/dropdownOptions.js';
-import TimeUtils from '../utils/timeUtils.js';
+import { DROPDOWN_OPTIONS } from '../constants/DropdownOptions';
+import TimeUtils from '../utils/TimeUtils';
 
 /*
 The desired text to display is:
@@ -12,8 +12,8 @@ export default class Countdown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            timeUnit: DropdownOptions.TIME_OPTIONS.defaultValue,
-            endUnit: DropdownOptions.END_OPTIONS.defaultValue,
+            timeUnit: DROPDOWN_OPTIONS.timeOptions.defaultValue,
+            endUnit: DROPDOWN_OPTIONS.endOptions.defaultValue,
             now: (new Date()).getTime()
         };
     }
@@ -31,7 +31,8 @@ export default class Countdown extends Component {
     }
 
     render() {
-        let ms = TimeUtils.timeRemainingMill(
+        let ms = TimeUtils.computeTimeRemaining(
+            this.state.timeUnit,
             this.state.now,
             this.state.endUnit
         );
@@ -39,12 +40,12 @@ export default class Countdown extends Component {
             <div className="main">
                 There are {ms}
                 <DropdownSelect
-                    dropdownOptions={DropdownOptions.TIME_OPTIONS}
+                    dropdownOptions={DROPDOWN_OPTIONS.timeOptions}
                     onChange={this.changeTimeUnit.bind(this)}
                 />
                 remaining
                 <DropdownSelect
-                    dropdownOptions={DropdownOptions.END_OPTIONS}
+                    dropdownOptions={DROPDOWN_OPTIONS.endOptions}
                     onChange={this.changeEndUnit.bind(this)}
                 />.
             </div>
