@@ -1,11 +1,11 @@
 export default class TimeCalculator {
 
-    static computeTimeRemaining(timeOption, now, dateOption) {
-        let ms = this.timeRemainingMill(now, dateOption);
+    static computeTimeRemaining(timeOption, dateOption, now) {
+        let ms = this.timeRemainingMill(dateOption, now);
         return ms / timeOption.convertFromMill;
     }
 
-    static timeRemainingMill(now, dateOption) {
+    static timeRemainingMill(dateOption, now) {
         return dateOption.endDate - now;
     }
 

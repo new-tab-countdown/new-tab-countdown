@@ -8,20 +8,24 @@ const MILLISECONDS_IN_DAY = HOURS_IN_DAY * MILLISECONDS_IN_HOUR;
 
 export const SECOND = {
     displayName: 'seconds',
+    toFixed: 0,
     convertFromMill: MILLISECONDS_IN_SECOND
 }
 
 export const MINUTE = {
     displayName: 'minutes',
+    toFixed: 2,
     convertFromMill: MILLISECONDS_IN_MINUTE
 }
 
 export const HOUR = {
     displayName: 'hours',
+    toFixed: 4,
     convertFromMill: MILLISECONDS_IN_HOUR
 }
 
 export const DAY = {
     displayName: 'days',
+    toFixed: 6,
     convertFromMill: MILLISECONDS_IN_DAY
 }

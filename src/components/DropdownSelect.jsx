@@ -8,7 +8,6 @@ const DropdownSelect = ({dropdownOptions, onChange}) => {
         let newOption = dropdownOptions.options.find(
             (option) => option.displayName === value
         );
-        console.info(newOption); 
         onChange(newOption);
     };
 

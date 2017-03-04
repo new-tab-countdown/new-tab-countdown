@@ -69,6 +69,9 @@ module.exports = [{
   output: OUTPUT_FILES,
   target: 'web',
   devtool: JS_SOURCE_MAP,
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   module: {
     loaders: [{
       /* Babel Loader: Transpiles ES6 -> ES5 */

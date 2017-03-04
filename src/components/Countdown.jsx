@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import DropdownSelect from './DropdownSelect.jsx';
+import DropdownSelect from './DropdownSelect';
 import { DROPDOWN_OPTIONS } from '../constants/DropdownOptions';
 import TimeCalculator from '../utils/TimeCalculator';
+import CountdownDisplay from './CountdownDisplay';
 
 /*
 The desired text to display is:
@@ -14,59 +15,39 @@ export default class Countdown extends Component {
         this.state = {
             timeOption: DROPDOWN_OPTIONS.timeOptions.defaultValue,
             dateOption: DROPDOWN_OPTIONS.dateOptions.defaultValue,
-            now: new Date(),
-            timeRemaining: null
+            now: Date.now(),
         };
+    }
+
+    componentDidMount() {
+        setInterval(() => {
+            this.setState({
+                now: Date.now()
+            });
+        }, 1000);
     }
 
     changeTimeUnit(timeOption) {
         this.setState({
             timeOption: timeOption
-        }, () => this.updateTimeRemaining);
+        });
     }
 
     changeEndUnit(dateOption) {
         this.setState({
             dateOption: dateOption
-        }, () => this.updateTimeRemaining);
-    }
-
-    // componentDidMount() {
-    //     this.setState({
-    //         ms: TimeCalculator.timeRemainingMill(
-    //             this.state.now,
-    //             this.state.dateOption
-    //         )
-    //     });
-    // }
-
-    updateTimeRemaining() {
-        this.setState({
-            ms: TimeCalculator.timeRemainingMill(
-                this.state.now,
-                this.state.dateOption
-            )
         });
     }
 
-    getTimeRemainingMill(ms) {
-        if (ms < 1000) {
-            this.forceUpdate();
-        } else {
-            return ms - 1000;
-        }
-    }
-
     render() {
-        console.info(this.state);
-        let ms = TimeCalculator.computeTimeRemaining(
-            this.state.timeOption,
-            this.state.now,
-            this.state.dateOption
-        );
         return (
             <div className="main">
-                There are {ms}
+                There are
+                <CountdownDisplay
+                    timeOption={this.state.timeOption}
+                    dateOption={this.state.dateOption}
+                    now={this.state.now}
+                />
                 <DropdownSelect
                     dropdownOptions={DROPDOWN_OPTIONS.timeOptions}
                     onChange={this.changeTimeUnit.bind(this)}
