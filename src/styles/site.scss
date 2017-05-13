@@ -1,11 +1,12 @@
 $base-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-$base-font-size: 30px;
+$base-font-size: 35px;
+$base-color: #262626;
+$secondary-color: #707070;
 
 html {
   font-size: $base-font-size;
+  color: $base-color;
   -webkit-font-smoothing: antialiased;
-  height: 100%;
-  width: 100%;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
@@ -15,16 +16,24 @@ html {
 
 body {
   font-family: $base-font;
+  cursor: default;
 }
 
-.container {
-  width: 100%;
-  text-align: center;
+.countdown {
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .dropdown {
     display: inline-block;
     position: relative;
+    color: $secondary-color;
+    border-bottom: 1px dotted;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .dropdown-options {
@@ -35,6 +44,10 @@ body {
 
 .dropdown-option {
     display: block;
+    text-align: left;
     overflow: hidden;
     white-space: nowrap;
+    &:hover {
+        color: darken($secondary-color, 40%);
+    }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Dropdown = ({shouldDisplay, displayOption, dropdownOptions, onDropdown, onSelect}) => {
+const Dropdown = ({ shouldDisplay, displayOption, dropdownOptions, onDropdown, onSelect }) => {
 
     const options = (dropdownOptions.options).map(
         (option, i) => <span key={i} onClick={() => onSelect(option)} className="dropdown-option">{option.displayName}</span>

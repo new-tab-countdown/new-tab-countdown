@@ -23,15 +23,13 @@ export default class Countdown extends Component {
 
     componentDidMount() {
         setInterval(() => {
-            this.setState({
-                now: Date.now()
-            });
+            this.setState({now: Date.now()});
         }, 100);
     }
 
     render() {
         return (
-            <div className="main">
+            <div className="countdown">
                 There are
                 <CountdownDisplay
                     timeOption={this.state.timeOption}
@@ -49,9 +47,7 @@ export default class Countdown extends Component {
                         })
                     }}
                     onSelect={(option) => {
-                        this.setState({
-                            timeOption: option
-                        })
+                        this.setState({timeOption: option})
                     }}
                 />
                 &nbsp;remaining&nbsp;
@@ -66,9 +62,7 @@ export default class Countdown extends Component {
                         })
                     }}
                     onSelect={(option) => {
-                        this.setState({
-                            dateOption: option
-                        })
+                        this.setState({dateOption: option})
                     }}
                 />.
             </div>

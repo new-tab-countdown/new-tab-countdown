@@ -4,7 +4,7 @@ import { TODAY, WEEK, MONTH, YEAR } from './DateOptions';
 export const DROPDOWN_OPTIONS = {
 
     timeOptions: {
-        defaultValue: MINUTE,
+        defaultValue: HOUR,
         options: [SECOND, MINUTE, HOUR, DAY]
     },
 

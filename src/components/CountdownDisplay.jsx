@@ -1,7 +1,7 @@
 import React from 'react';
 import TimeCalculator from '../utils/TimeCalculator';
 
-const CountdownDisplay = ({timeOption, dateOption, now}) => {
+const CountdownDisplay = ({ timeOption, dateOption, now }) => {
 
     const timeRemaining = TimeCalculator.computeTimeRemaining(timeOption, dateOption, now);
 
