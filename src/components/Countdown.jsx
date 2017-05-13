@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import DropdownSelect from './DropdownSelect';
 import { DROPDOWN_OPTIONS } from '../constants/DropdownOptions';
 import TimeCalculator from '../utils/TimeCalculator';
 import CountdownDisplay from './CountdownDisplay';
+import Dropdown from './Dropdown';
 
 /*
 The desired text to display is:
@@ -10,12 +10,14 @@ The desired text to display is:
 */
 export default class Countdown extends Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
+            displayTimeOption: false,
+            displayDateOption: false,
             timeOption: DROPDOWN_OPTIONS.timeOptions.defaultValue,
             dateOption: DROPDOWN_OPTIONS.dateOptions.defaultValue,
-            now: Date.now(),
+            now: Date.now()
         };
     }
 
@@ -24,19 +26,7 @@ export default class Countdown extends Component {
             this.setState({
                 now: Date.now()
             });
-        }, 1000);
-    }
-
-    changeTimeUnit(timeOption) {
-        this.setState({
-            timeOption: timeOption
-        });
-    }
-
-    changeEndUnit(dateOption) {
-        this.setState({
-            dateOption: dateOption
-        });
+        }, 100);
     }
 
     render() {
@@ -48,14 +38,38 @@ export default class Countdown extends Component {
                     dateOption={this.state.dateOption}
                     now={this.state.now}
                 />
-                <DropdownSelect
+                <Dropdown
+                    shouldDisplay={this.state.displayTimeOption}
+                    displayOption={this.state.timeOption}
                     dropdownOptions={DROPDOWN_OPTIONS.timeOptions}
-                    onChange={this.changeTimeUnit.bind(this)}
+                    onDropdown={() => {
+                        this.setState({
+                            displayTimeOption: !this.state.displayTimeOption,
+                            displayDateOption: false
+                        })
+                    }}
+                    onSelect={(option) => {
+                        this.setState({
+                            timeOption: option
+                        })
+                    }}
                 />
-                remaining
-                <DropdownSelect
+                &nbsp;remaining&nbsp;
+                <Dropdown
+                    shouldDisplay={this.state.displayDateOption}
+                    displayOption={this.state.dateOption}
                     dropdownOptions={DROPDOWN_OPTIONS.dateOptions}
-                    onChange={this.changeEndUnit.bind(this)}
+                    onDropdown={() => {
+                        this.setState({
+                            displayTimeOption: false,
+                            displayDateOption: !this.state.displayDateOption
+                        })
+                    }}
+                    onSelect={(option) => {
+                        this.setState({
+                            dateOption: option
+                        })
+                    }}
                 />.
             </div>
         );
