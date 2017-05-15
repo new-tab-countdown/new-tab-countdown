@@ -1,8 +1,8 @@
 export default class CustomDateInputHelper {
 
     static parseDescriptionAndDate(customDateString) {
-        // Expect the date format to be `mm/dd/yy`.
-        let parsed = customDateString.match(/\d{2}([.\-/ ])\d{2}\1\d{2}/);
+        // Expect the date format to be `mm/dd/yyyy`.
+        let parsed = customDateString.replace(/[{()}]/g, '').match(/\d{2}([.\-/ ])\d{2}\1\d{4}/);
         if (parsed === null) {
             return {
                 dateString: null,

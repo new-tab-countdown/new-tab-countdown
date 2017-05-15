@@ -19,7 +19,7 @@ export default class CustomDateInput extends Component {
         return (
             <input
                 type="text"
-                placeholder={(document.activeElement.className.indexOf("custom-date-input") !== -1) ? "description + mm/dd/yy" : "custom date"}
+                placeholder={(document.activeElement.className.indexOf("custom-date-input") !== -1) ? "description + mm/dd/yyyy" : "custom date"}
                 onChange={(e) => this.setState({
                     input: e.target.value
                 })}
