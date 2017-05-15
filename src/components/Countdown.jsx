@@ -3,6 +3,8 @@ import { DROPDOWN_OPTIONS } from '../constants/DropdownOptions';
 import TimeCalculator from '../utils/TimeCalculator';
 import CountdownDisplay from './CountdownDisplay';
 import Dropdown from './Dropdown';
+import CustomDateInput from './CustomDateInput';
+import CustomDateInputHelper from '../utils/CustomDateInputHelper';
 
 /*
 The desired text to display is:
@@ -47,7 +49,11 @@ export default class Countdown extends Component {
                         })
                     }}
                     onSelect={(option) => {
-                        this.setState({timeOption: option})
+                        this.setState({
+                            displayTimeOption: !this.state.displayTimeOption,
+                            displayDateOption: false,
+                            timeOption: option
+                        })
                     }}
                 />
                 &nbsp;remaining&nbsp;
@@ -55,6 +61,16 @@ export default class Countdown extends Component {
                     shouldDisplay={this.state.displayDateOption}
                     displayOption={this.state.dateOption}
                     dropdownOptions={DROPDOWN_OPTIONS.dateOptions}
+                    customDropdownOption={
+                        <CustomDateInput
+                            onSubmit={(input) => {
+                                this.setState({
+                                    displayDateOption: false,
+                                    dateOption: CustomDateInputHelper.getCustomDate(input)
+                                })
+                            }}
+                        />
+                    }
                     onDropdown={() => {
                         this.setState({
                             displayTimeOption: false,
@@ -62,7 +78,11 @@ export default class Countdown extends Component {
                         })
                     }}
                     onSelect={(option) => {
-                        this.setState({dateOption: option})
+                        this.setState({
+                            displayTimeOption: false,
+                            displayDateOption: !this.state.displayDateOption,
+                            dateOption: option
+                        })
                     }}
                 />.
             </div>
