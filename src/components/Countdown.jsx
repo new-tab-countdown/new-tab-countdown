@@ -23,6 +23,16 @@ export default class Countdown extends Component {
         };
     }
 
+    componentWillMount() {
+        chrome.storage.sync.get("timeOption", (value) => {
+            if (value && value.timeOption) {
+                this.setState({
+                    timeOption: value.timeOption
+                });
+            }
+        });
+    }
+
     componentDidMount() {
         setInterval(() => {
             this.setState({now: Date.now()});
@@ -46,14 +56,15 @@ export default class Countdown extends Component {
                         this.setState({
                             displayTimeOption: !this.state.displayTimeOption,
                             displayDateOption: false
-                        })
+                        });
                     }}
                     onSelect={(option) => {
                         this.setState({
                             displayTimeOption: !this.state.displayTimeOption,
                             displayDateOption: false,
                             timeOption: option
-                        })
+                        });
+                        chrome.storage.sync.set({"timeOption": option});
                     }}
                 />
                 &nbsp;remaining&nbsp;
@@ -67,7 +78,7 @@ export default class Countdown extends Component {
                                 this.setState({
                                     displayDateOption: false,
                                     dateOption: CustomDateInputHelper.getCustomDate(input)
-                                })
+                                });
                             }}
                         />
                     }
@@ -75,14 +86,14 @@ export default class Countdown extends Component {
                         this.setState({
                             displayTimeOption: false,
                             displayDateOption: !this.state.displayDateOption
-                        })
+                        });
                     }}
                     onSelect={(option) => {
                         this.setState({
                             displayTimeOption: false,
                             displayDateOption: !this.state.displayDateOption,
                             dateOption: option
-                        })
+                        });
                     }}
                 />.
             </div>
