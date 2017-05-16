@@ -12,25 +12,15 @@ The desired text to display is:
 */
 export default class Countdown extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             displayTimeOption: false,
             displayDateOption: false,
-            timeOption: DROPDOWN_OPTIONS.timeOptions.defaultValue,
-            dateOption: DROPDOWN_OPTIONS.dateOptions.defaultValue,
+            timeOption: props.timeOption,
+            dateOption: props.dateOption,
             now: Date.now()
         };
-    }
-
-    componentWillMount() {
-        chrome.storage.sync.get("timeOption", (value) => {
-            if (value && value.timeOption) {
-                this.setState({
-                    timeOption: value.timeOption
-                });
-            }
-        });
     }
 
     componentDidMount() {
@@ -79,6 +69,7 @@ export default class Countdown extends Component {
                                     displayDateOption: false,
                                     dateOption: CustomDateInputHelper.getCustomDate(input)
                                 });
+                                chrome.storage.sync.set({"dateOption": input});
                             }}
                         />
                     }
@@ -94,10 +85,16 @@ export default class Countdown extends Component {
                             displayDateOption: !this.state.displayDateOption,
                             dateOption: option
                         });
+                        chrome.storage.sync.set({"dateOption": option});
                     }}
                 />.
             </div>
         );
     }
 
+}
+
+Countdown.propTypes = {
+    timeOption: React.PropTypes.object.isRequired,
+    dateOption: React.PropTypes.object.isRequired
 }
