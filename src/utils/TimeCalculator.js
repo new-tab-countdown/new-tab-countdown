@@ -1,16 +1,19 @@
+import DateCalculator from './DateCalculator';
+
 export default class TimeCalculator {
 
     static computeTimeRemaining(timeOption, dateOption, now) {
-        if (dateOption.endDate === null) {
+        let endDate = dateOption.endDate ? DateCalculator.getEndDateFromDateOption(dateOption.endDate) : DateCalculator.getEndDateFromDateOption(dateOption);
+        if (endDate === null) {
             return null;
         } else {
-            let ms = this.timeRemainingMill(dateOption, now);
+            let ms = this.timeRemainingMill(endDate, now);
             return ms / timeOption.convertFromMill;
         }
     }
 
-    static timeRemainingMill(dateOption, now) {
-        return dateOption.endDate - now;
+    static timeRemainingMill(endDate, now) {
+        return endDate - now;
     }
 
 }

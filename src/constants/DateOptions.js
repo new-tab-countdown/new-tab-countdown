@@ -1,21 +1,15 @@
-import DateCalculator from '../utils/DateCalculator';
-
 export const TODAY = {
-    displayName: 'today',
-    endDate: DateCalculator.getStartOfTomorrow()
+    displayName: 'today'
 }
 
 export const WEEK = {
-    displayName: 'this week',
-    endDate: DateCalculator.getStartOfNextWeek()
+    displayName: 'this week'
 }
 
 export const MONTH = {
-    displayName: 'this month',
-    endDate: DateCalculator.getStartOfNextMonth()
+    displayName: 'this month'
 }
 
 export const YEAR = {
-    displayName: 'this year',
-    endDate: DateCalculator.getStartOfNextYear()
+    displayName: 'this year'
 }

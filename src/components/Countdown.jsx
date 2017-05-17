@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { DROPDOWN_OPTIONS } from '../constants/DropdownOptions';
 import TimeCalculator from '../utils/TimeCalculator';
 import CountdownDisplay from './CountdownDisplay';
@@ -12,13 +13,13 @@ The desired text to display is:
 */
 export default class Countdown extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             displayTimeOption: false,
             displayDateOption: false,
-            timeOption: DROPDOWN_OPTIONS.timeOptions.defaultValue,
-            dateOption: DROPDOWN_OPTIONS.dateOptions.defaultValue,
+            timeOption: props.timeOption,
+            dateOption: props.dateOption,
             now: Date.now()
         };
     }
@@ -46,14 +47,15 @@ export default class Countdown extends Component {
                         this.setState({
                             displayTimeOption: !this.state.displayTimeOption,
                             displayDateOption: false
-                        })
+                        });
                     }}
                     onSelect={(option) => {
                         this.setState({
                             displayTimeOption: !this.state.displayTimeOption,
                             displayDateOption: false,
                             timeOption: option
-                        })
+                        });
+                        chrome.storage.sync.set({"timeOption": option});
                     }}
                 />
                 &nbsp;remaining&nbsp;
@@ -64,10 +66,12 @@ export default class Countdown extends Component {
                     customDropdownOption={
                         <CustomDateInput
                             onSubmit={(input) => {
+                                let customDate = CustomDateInputHelper.getCustomDate(input);
                                 this.setState({
                                     displayDateOption: false,
-                                    dateOption: CustomDateInputHelper.getCustomDate(input)
-                                })
+                                    dateOption: customDate
+                                });
+                                chrome.storage.sync.set({"dateOption": customDate});
                             }}
                         />
                     }
@@ -75,18 +79,24 @@ export default class Countdown extends Component {
                         this.setState({
                             displayTimeOption: false,
                             displayDateOption: !this.state.displayDateOption
-                        })
+                        });
                     }}
                     onSelect={(option) => {
                         this.setState({
                             displayTimeOption: false,
                             displayDateOption: !this.state.displayDateOption,
                             dateOption: option
-                        })
+                        });
+                        chrome.storage.sync.set({"dateOption": option});
                     }}
                 />.
             </div>
         );
     }
 
+}
+
+Countdown.propTypes = {
+    timeOption: PropTypes.object.isRequired,
+    dateOption: PropTypes.object.isRequired
 }

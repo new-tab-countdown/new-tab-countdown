@@ -1,3 +1,5 @@
+import { TODAY, WEEK, MONTH, YEAR } from '../constants/DateOptions';
+
 export default class DateCalculator {
 
     static getStartOfTomorrow() {
@@ -38,6 +40,22 @@ export default class DateCalculator {
             1
         );
         return nextYear;
+    }
+
+    static getEndDateFromDateOption(dateOption) {
+        switch (dateOption.displayName) {
+            case TODAY.displayName:
+                return DateCalculator.getStartOfTomorrow();
+            case WEEK.displayName:
+                return DateCalculator.getStartOfNextWeek();
+            case MONTH.displayName:
+                return DateCalculator.getStartOfNextMonth();
+            case YEAR.displayName:
+                return DateCalculator.getStartOfNextYear();
+            default:
+                let endDate = Date.parse(dateOption);
+                return !isNaN(endDate)? new Date(dateOption) : null;
+        }
     }
 
 }
