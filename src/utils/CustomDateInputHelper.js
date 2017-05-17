@@ -19,16 +19,11 @@ export default class CustomDateInputHelper {
         }
     }
 
-    static getDateFromDateString(date) {
-        let endDate = Date.parse(date);
-        return (!isNaN(endDate) && endDate > 0) ? new Date(date) : null;
-    }
-
     static getCustomDate(input) {
         let dateAndDescription = this.parseDescriptionAndDate(input);
         return {
             displayName: `until ${dateAndDescription.descriptionString} ${dateAndDescription.dateString ? "(" + dateAndDescription.dateString + ")" : ""}`.trim(),
-            endDate: this.getDateFromDateString(dateAndDescription.dateString)
+            endDate: dateAndDescription.dateString
         };
     }
 

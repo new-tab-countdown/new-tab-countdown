@@ -65,11 +65,12 @@ export default class Countdown extends Component {
                     customDropdownOption={
                         <CustomDateInput
                             onSubmit={(input) => {
+                                let customDate = CustomDateInputHelper.getCustomDate(input);
                                 this.setState({
                                     displayDateOption: false,
-                                    dateOption: CustomDateInputHelper.getCustomDate(input)
+                                    dateOption: customDate
                                 });
-                                chrome.storage.sync.set({"dateOption": input});
+                                chrome.storage.sync.set({"dateOption": customDate});
                             }}
                         />
                     }
