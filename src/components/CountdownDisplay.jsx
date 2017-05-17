@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TimeCalculator from '../utils/TimeCalculator';
 
 const CountdownDisplay = ({ timeOption, dateOption, now }) => {
@@ -12,9 +13,9 @@ const CountdownDisplay = ({ timeOption, dateOption, now }) => {
 };
 
 CountdownDisplay.propTypes = {
-    timeOption: React.PropTypes.object.isRequired,
-    dateOption: React.PropTypes.object.isRequired,
-    now: React.PropTypes.number.isRequired
+    timeOption: PropTypes.object.isRequired,
+    dateOption: PropTypes.object.isRequired,
+    now: PropTypes.number.isRequired
 };
 
 export default CountdownDisplay;

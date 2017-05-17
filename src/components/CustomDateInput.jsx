@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class CustomDateInput extends Component {
 
@@ -32,5 +33,5 @@ export default class CustomDateInput extends Component {
 }
 
 CustomDateInput.propTypes = {
-    onSubmit: React.PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired
 }

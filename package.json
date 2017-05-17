@@ -36,5 +36,8 @@
     "yargs": "^8.0.1"
   },
   "author": "Sebastian Liu",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "prop-types": "^15.5.10"
+  }
 }

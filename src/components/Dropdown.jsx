@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Dropdown = ({ shouldDisplay, displayOption, dropdownOptions, customDropdownOption, onDropdown, onSelect }) => {
 
@@ -28,12 +29,12 @@ const Dropdown = ({ shouldDisplay, displayOption, dropdownOptions, customDropdow
 };
 
 Dropdown.propTypes = {
-    shouldDisplay: React.PropTypes.bool.isRequired,
-    displayOption: React.PropTypes.object.isRequired,
-    dropdownOptions: React.PropTypes.object.isRequired,
-    customDropdownOption: React.PropTypes.object,
-    onDropdown: React.PropTypes.func.isRequired,
-    onSelect: React.PropTypes.func.isRequired
+    shouldDisplay: PropTypes.bool.isRequired,
+    displayOption: PropTypes.object.isRequired,
+    dropdownOptions: PropTypes.object.isRequired,
+    customDropdownOption: PropTypes.object,
+    onDropdown: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired
 };
 
 export default Dropdown;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { DROPDOWN_OPTIONS } from '../constants/DropdownOptions';
 import TimeCalculator from '../utils/TimeCalculator';
 import CountdownDisplay from './CountdownDisplay';
@@ -96,6 +97,6 @@ export default class Countdown extends Component {
 }
 
 Countdown.propTypes = {
-    timeOption: React.PropTypes.object.isRequired,
-    dateOption: React.PropTypes.object.isRequired
+    timeOption: PropTypes.object.isRequired,
+    dateOption: PropTypes.object.isRequired
 }
