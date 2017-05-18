@@ -7,7 +7,9 @@ const CountdownDisplay = ({ timeOption, dateOption, now }) => {
     const timeRemaining = TimeCalculator.computeTimeRemaining(timeOption, dateOption, now);
 
     return (
-        <span className="time-remaining">&nbsp;{timeRemaining ? timeRemaining.toFixed(timeOption.toFixed) : "ಠ_ಠ"}&nbsp;</span>
+        <span className="time-remaining">
+            &nbsp;{timeRemaining ? timeRemaining.toFixed(timeOption.toFixed) : "ಠ_ಠ"}&nbsp;
+        </span>
     );
 
 };
