@@ -1,30 +1,34 @@
+import nlp from 'compromise';
+
 export default class CustomDateInputHelper {
 
-    static parseDescriptionAndDate(customDateString) {
-        // Expect the date format to be `mm/dd/yyyy`.
-        let parsed = customDateString.replace(/[{()}]/g, '').match(/\d{2}([.\-/ ])\d{2}\1\d{4}/);
-        if (parsed === null) {
-            return {
-                dateString: null,
-                descriptionString: customDateString
-            };
-        } else {
-            let date = parsed[0];
-            let dateAndDescription = customDateString.split(date);
-            let description = parsed.index === 0 ? dateAndDescription[1].trim() : dateAndDescription[0].trim();
-            return {
-                dateString: date,
-                descriptionString: description
-            };
-        }
+    static parseCustomDateInput(customDateInput) {
+        return nlp(customDateInput).dates();
     }
 
     static getCustomDate(input) {
-        let dateAndDescription = this.parseDescriptionAndDate(input);
-        return {
-            displayName: `until ${dateAndDescription.descriptionString} ${dateAndDescription.dateString ? "(" + dateAndDescription.dateString + ")" : ""}`.trim(),
-            endDate: dateAndDescription.dateString
-        };
+        let parsedCustomDate = this.parseCustomDateInput(input).out('array');
+        if (parsedCustomDate.length !== 1) {
+            return null;
+        } else {
+            // Remove [st | nd | rd | th] from string when converting to date.
+            let dateString = parsedCustomDate[0].normalize();
+            let modifiedDateString = dateString.replace(/(\d+)(st|nd|rd|th)/, '$1');
+            // If there is no year, then assume current year.
+            if (modifiedDateString.split(" ").length === 2) {
+                modifiedDateString = `${modifiedDateString} ${new Date().getFullYear()}`;
+            }
+            let date = new Date(modifiedDateString);
+            if (isNaN(Date.parse(date))) {
+                return null;
+            } else {
+                return {
+                    // Display normalized description + date using mm/dd/yyyy.
+                    displayName: `until ${input.replace(/,/, "").replace(dateString, "").trim()} (${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()})`,
+                    endDate: modifiedDateString
+                };
+            }
+        }
     }
 
 }
