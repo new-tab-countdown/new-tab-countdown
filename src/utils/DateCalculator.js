@@ -9,7 +9,7 @@ export default class DateCalculator {
             now.getMonth(),
             now.getDate() + 1
         );
-        return tomorrow.getTime();
+        return tomorrow;
     }
 
     static getStartOfNextWeek() {
@@ -45,13 +45,13 @@ export default class DateCalculator {
     static getEndDateFromDateOption(dateOption) {
         switch (dateOption.displayName) {
             case TODAY.displayName:
-                return DateCalculator.getStartOfTomorrow();
+                return this.getStartOfTomorrow();
             case WEEK.displayName:
-                return DateCalculator.getStartOfNextWeek();
+                return this.getStartOfNextWeek();
             case MONTH.displayName:
-                return DateCalculator.getStartOfNextMonth();
+                return this.getStartOfNextMonth();
             case YEAR.displayName:
-                return DateCalculator.getStartOfNextYear();
+                return this.getStartOfNextYear();
             default:
                 let endDate = Date.parse(dateOption);
                 return !isNaN(endDate)? new Date(dateOption) : null;

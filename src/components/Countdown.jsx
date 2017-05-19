@@ -16,8 +16,8 @@ export default class Countdown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            displayTimeOption: false,
-            displayDateOption: false,
+            displayTimeOptionDropdown: false,
+            displayDateOptionDropdown: false,
             timeOption: props.timeOption,
             dateOption: props.dateOption,
             now: Date.now()
@@ -40,19 +40,19 @@ export default class Countdown extends Component {
                     now={this.state.now}
                 />
                 <Dropdown
-                    shouldDisplay={this.state.displayTimeOption}
+                    shouldDisplay={this.state.displayTimeOptionDropdown}
                     displayOption={this.state.timeOption}
                     dropdownOptions={DROPDOWN_OPTIONS.timeOptions}
                     onDropdown={() => {
                         this.setState({
-                            displayTimeOption: !this.state.displayTimeOption,
-                            displayDateOption: false
+                            displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
+                            displayDateOptionDropdown: false
                         });
                     }}
                     onSelect={(option) => {
                         this.setState({
-                            displayTimeOption: !this.state.displayTimeOption,
-                            displayDateOption: false,
+                            displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
+                            displayDateOptionDropdown: false,
                             timeOption: option
                         });
                         chrome.storage.sync.set({"timeOption": option});
@@ -60,7 +60,7 @@ export default class Countdown extends Component {
                 />
                 &nbsp;remaining&nbsp;
                 <Dropdown
-                    shouldDisplay={this.state.displayDateOption}
+                    shouldDisplay={this.state.displayDateOptionDropdown}
                     displayOption={this.state.dateOption}
                     dropdownOptions={DROPDOWN_OPTIONS.dateOptions}
                     customDropdownOption={
@@ -68,7 +68,7 @@ export default class Countdown extends Component {
                             onSubmit={(input) => {
                                 let customDate = CustomDateInputHelper.getCustomDate(input);
                                 this.setState({
-                                    displayDateOption: false,
+                                    displayDateOptionDropdown: false,
                                     dateOption: customDate
                                 });
                                 chrome.storage.sync.set({"dateOption": customDate});
@@ -77,14 +77,14 @@ export default class Countdown extends Component {
                     }
                     onDropdown={() => {
                         this.setState({
-                            displayTimeOption: false,
-                            displayDateOption: !this.state.displayDateOption
+                            displayTimeOptionDropdown: false,
+                            displayDateOptionDropdown: !this.state.displayDateOptionDropdown
                         });
                     }}
                     onSelect={(option) => {
                         this.setState({
-                            displayTimeOption: false,
-                            displayDateOption: !this.state.displayDateOption,
+                            displayTimeOptionDropdown: false,
+                            displayDateOptionDropdown: !this.state.displayDateOptionDropdown,
                             dateOption: option
                         });
                         chrome.storage.sync.set({"dateOption": option});

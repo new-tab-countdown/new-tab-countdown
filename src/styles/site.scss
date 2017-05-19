@@ -1,5 +1,6 @@
 $base-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-$base-font-size: 26px;
+$base-font-size: 24px;
+$secondary-font-size: 12px;
 $base-color: #262626;
 $secondary-color: #707070;
 
@@ -63,4 +64,11 @@ body {
         border-bottom: 1px dotted;
         cursor: auto;
     }
+}
+
+.helper-message {
+    font-size: $secondary-font-size;
+    padding: 0;
+    margin: 0;
+    cursor: default;
 }

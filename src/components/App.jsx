@@ -9,6 +9,7 @@ chrome.storage.sync.get((value) => {
     let dateOption = (value && value.dateOption) ? value.dateOption : DROPDOWN_OPTIONS.dateOptions.defaultValue;
     ReactDOM.render(
         <Countdown
+            className="countdown"
             timeOption={timeOption}
             dateOption={dateOption}
         />,
