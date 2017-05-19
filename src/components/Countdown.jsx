@@ -9,7 +9,7 @@ import CustomDateInputHelper from '../utils/CustomDateInputHelper';
 
 /*
 The desired text to display is:
-"There are `n` [seconds | minutes | hours | days] remaining [today | this week | this month | this year]."
+"There are `n` [seconds | minutes | hours | days] remaining [today | this week | this month | this year | custom date {description + date}]."
 */
 export default class Countdown extends Component {
 

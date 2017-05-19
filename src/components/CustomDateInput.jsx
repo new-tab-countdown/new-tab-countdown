@@ -10,12 +10,14 @@ export default class CustomDateInput extends Component {
         this.state = {
             input: '',
             isValidDate: true,
+            placeholder: "custom date",
+            isOnFocus: false
         };
     }
 
     handleKeyDown(e) {
         if (e.key.toLowerCase() === "enter") {
-            if (this.isValid(this.state.input)) {
+            if (!this.isValid(this.state.input)) {
                 this.setState({
                     isValidDate: false
                 });
@@ -30,16 +32,13 @@ export default class CustomDateInput extends Component {
     }
 
     isValid(input) {
-        let customDate = CustomDateInputHelper.getCustomDate(input);
-        return !isNaN(customDate.endDate);
+        return CustomDateInputHelper.getCustomDate(input);
     }
 
     getInvalidDateMessage() {
-        let exampleDate = DateCalculator.getStartOfNextWeek();
-        let exampleDateInput = `${exampleDate.getMonth() + 1}/${exampleDate.getDate()}/${exampleDate.getFullYear()}`;
         return (
             <p className="helper-message">
-                {`invalid date (example: "vacation ${exampleDateInput}")`}
+                {`invalid date (example: "vacation ${DateCalculator.getExampleDateString()}")`}
             </p>
         );
     }
@@ -53,13 +52,15 @@ export default class CustomDateInput extends Component {
     }
 
     getMessage() {
-        let message = null;
-        if (!this.state.isValidDate && this.state.input.length) {
-            message = this.getInvalidDateMessage();
-        } else if (this.state.input.length) {
-            message = this.getHelperMessage();
+        if (this.state.isOnFocus) {
+            if (!this.state.isValidDate && this.state.input.length) {
+                return this.getInvalidDateMessage();
+            } else if (this.state.input.length) {
+                return this.getHelperMessage();
+            }
+        } else {
+            return null;
         }
-        return message;
     }
 
     render() {
@@ -69,7 +70,19 @@ export default class CustomDateInput extends Component {
                     className="custom-date-input dropdown-option"
                     type="text"
                     maxLength={35}
-                    placeholder={(document.activeElement.className.indexOf("custom-date-input") !== -1) ? "description + mm/dd/yyyy" : "custom date"}
+                    placeholder={this.state.placeholder}
+                    onFocus={() => {
+                        this.setState({
+                            placeholder: "description + mm/dd/yyy",
+                            isOnFocus: true
+                        });
+                    }}
+                    onBlur={() => {
+                        this.setState({
+                            placeholder: "custom date",
+                            isOnFocus: false
+                        });
+                    }}
                     onChange={(e) => {
                         this.setState({
                             input: e.target.value
@@ -77,7 +90,7 @@ export default class CustomDateInput extends Component {
                     }}
                     onKeyDown={(e) => this.handleKeyDown(e)}
                 />
-            {this.getMessage()}
+                {this.getMessage()}
             </span>
         );
     }

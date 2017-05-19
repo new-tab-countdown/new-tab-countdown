@@ -42,6 +42,11 @@ export default class DateCalculator {
         return nextYear;
     }
 
+    static getExampleDateString() {
+        let exampleDate = this.getStartOfNextWeek();
+        return `${exampleDate.getMonth() + 1}/${exampleDate.getDate()}/${exampleDate.getFullYear()}`;
+    }
+
     static getEndDateFromDateOption(dateOption) {
         switch (dateOption.displayName) {
             case TODAY.displayName:
@@ -53,8 +58,7 @@ export default class DateCalculator {
             case YEAR.displayName:
                 return this.getStartOfNextYear();
             default:
-                let endDate = Date.parse(dateOption);
-                return !isNaN(endDate)? new Date(dateOption) : null;
+                return new Date(dateOption);
         }
     }
 
