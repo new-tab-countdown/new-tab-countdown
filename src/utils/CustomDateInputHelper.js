@@ -3,7 +3,7 @@ import nlp from 'compromise';
 export default class CustomDateInputHelper {
 
     static parseCustomDateInput(customDateInput) {
-        return nlp(customDateInput).dates();
+        return nlp(customDateInput, this.getLexicon()).normalize().dates().not('#Day').not('#Holiday').dates();
     }
 
     static getCustomDate(input) {
