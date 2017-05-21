@@ -1,7 +1,11 @@
 {
-    "name": "countdown-to-x",
+    "name": "calendar-countdown",
     "version": "1.0.0",
-    "description": "countdown to x",
+    "description": "Countdown time remaining in the day, week, month, year, or a custom date.",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:cbass10liu/calendar-countdown.git"
+    },
     "main": "webpack.config.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,11 +1,11 @@
 {
     "name": "Calendar Countdown",
     "description": "Countdown time remaining in the day, week, month, or year.",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "manifest_version": 2,
     "icons": {
-        "48": "assets/Clock-48.png",
-        "128": "assets/Clock-128.png"
+        "48": "extension-icons/Clock-48.png",
+        "128": "extension-icons/Clock-128.png"
     },
     "chrome_url_overrides": {
         "newtab": "index.html"
