@@ -20,14 +20,16 @@ export default class Countdown extends Component {
             displayDateOptionDropdown: false,
             timeOption: props.timeOption,
             dateOption: props.dateOption,
-            now: Date.now()
+            timeRemaining: props.timeRemaining
         };
     }
 
     componentDidMount() {
         setInterval(() => {
-            this.setState({now: Date.now()});
-        }, 100);
+            this.setState({
+                timeRemaining: this.state.timeRemaining - this.props.interval
+            });
+        }, this.props.interval);
     }
 
     render() {
@@ -36,8 +38,7 @@ export default class Countdown extends Component {
                 There are
                 <CountdownDisplay
                     timeOption={this.state.timeOption}
-                    dateOption={this.state.dateOption}
-                    now={this.state.now}
+                    timeRemaining={this.state.timeRemaining}
                 />
                 <Dropdown
                     shouldDisplay={this.state.displayTimeOptionDropdown}
@@ -69,7 +70,8 @@ export default class Countdown extends Component {
                                 let customDate = CustomDateInputHelper.getCustomDate(input);
                                 this.setState({
                                     displayDateOptionDropdown: false,
-                                    dateOption: customDate
+                                    dateOption: customDate,
+                                    timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, customDate, new Date())
                                 });
                                 chrome.storage.sync.set({"dateOption": customDate});
                             }}
@@ -85,7 +87,8 @@ export default class Countdown extends Component {
                         this.setState({
                             displayTimeOptionDropdown: false,
                             displayDateOptionDropdown: !this.state.displayDateOptionDropdown,
-                            dateOption: option
+                            dateOption: option,
+                            timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, option, new Date())
                         });
                         chrome.storage.sync.set({"dateOption": option});
                     }}
@@ -98,5 +101,7 @@ export default class Countdown extends Component {
 
 Countdown.propTypes = {
     timeOption: PropTypes.object.isRequired,
-    dateOption: PropTypes.object.isRequired
+    dateOption: PropTypes.object.isRequired,
+    timeRemaining: PropTypes.number.isRequired,
+    interval: PropTypes.number.isRequired
 }

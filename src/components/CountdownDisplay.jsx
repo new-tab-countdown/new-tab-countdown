@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TimeCalculator from '../utils/TimeCalculator';
 
-const CountdownDisplay = ({ timeOption, dateOption, now }) => {
-
-    const timeRemaining = TimeCalculator.computeTimeRemaining(timeOption, dateOption, now);
+const CountdownDisplay = ({ timeOption, timeRemaining }) => {
 
     return (
         <span className="time-remaining">
-            &nbsp;{timeRemaining ? timeRemaining.toFixed(timeOption.toFixed) : "ಠ_ಠ"}&nbsp;
+            &nbsp;{timeRemaining ? (timeRemaining / timeOption.convertFromMill).toFixed(timeOption.toFixed) : "ಠ_ಠ"}&nbsp;
         </span>
     );
 
@@ -16,8 +13,7 @@ const CountdownDisplay = ({ timeOption, dateOption, now }) => {
 
 CountdownDisplay.propTypes = {
     timeOption: PropTypes.object.isRequired,
-    dateOption: PropTypes.object.isRequired,
-    now: PropTypes.number.isRequired
+    timeRemaining: PropTypes.number.isRequired
 };
 
 export default CountdownDisplay;
