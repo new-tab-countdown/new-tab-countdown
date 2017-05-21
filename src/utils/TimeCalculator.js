@@ -8,7 +8,7 @@ export default class TimeCalculator {
             return null;
         } else {
             let ms = this.timeRemainingMill(endDate, now);
-            return ms / timeOption.convertFromMill;
+            return ms;
         }
     }
 
