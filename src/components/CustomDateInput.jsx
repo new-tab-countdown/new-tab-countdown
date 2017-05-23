@@ -65,15 +65,15 @@ export default class CustomDateInput extends Component {
 
     render() {
         return (
-            <span>
+            <span className="dropdown-option">
                 <input
-                    className="custom-date-input dropdown-option"
+                    className="custom-date-input"
                     type="text"
                     maxLength={35}
                     placeholder={this.state.placeholder}
                     onFocus={() => {
                         this.setState({
-                            placeholder: "description + mm/dd/yyy",
+                            placeholder: "description + mm/dd/yyyy",
                             isOnFocus: true
                         });
                     }}
