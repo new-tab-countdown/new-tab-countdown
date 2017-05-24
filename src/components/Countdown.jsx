@@ -30,6 +30,13 @@ export default class Countdown extends Component {
                 timeRemaining: this.state.timeRemaining - this.props.interval
             });
         }, this.props.interval);
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                this.setState({
+                    timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, this.state.dateOption, new Date())
+                });
+            }
+        });
     }
 
     render() {
