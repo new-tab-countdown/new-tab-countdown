@@ -40,6 +40,11 @@ export default class Countdown extends Component {
     }
 
     render() {
+        if (this.state.timeRemaining < 0 && (!this.state.dateOption.endDate)) {
+            this.setState({
+                timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, this.state.dateOption, new Date())
+            });
+        }
         return (
             <div className="countdown">
                 There are
