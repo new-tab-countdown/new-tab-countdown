@@ -1,6 +1,6 @@
 import nlp from 'compromise';
 
-export default class CustomDateInputHelper {
+export default class CustomDateHelper {
 
     static parseCustomDateInput(customDateInput) {
         return nlp(customDateInput, this.getLexicon()).normalize().dates().not('#Day').not('#Holiday').dates();

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DateCalculator from '../utils/DateCalculator';
-import CustomDateInputHelper from '../utils/CustomDateInputHelper';
+import CustomDateHelper from '../utils/CustomDateHelper';
 
 export default class CustomDateInput extends Component {
 
@@ -32,7 +32,7 @@ export default class CustomDateInput extends Component {
     }
 
     isValid(input) {
-        return CustomDateInputHelper.getCustomDate(input);
+        return CustomDateHelper.getCustomDate(input);
     }
 
     getInvalidDateMessage() {
