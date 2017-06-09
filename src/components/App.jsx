@@ -10,6 +10,7 @@ chrome.storage.sync.get((value) => {
     let dateOption = (value && value.dateOption) ? value.dateOption : DROPDOWN_OPTIONS.dateOptions.defaultValue;
     let customDateOption = (value && value.customDateOption) ? value.customDateOption : null;
     let timeRemaining = TimeCalculator.computeTimeRemaining(timeOption, dateOption, new Date());
+    let displayCustomDateOption = (value && value.displayCustomDateOption !== null) ? value.displayCustomDateOption : true;
     const INTERVAL = 100;
     ReactDOM.render(
         <Countdown
@@ -17,6 +18,7 @@ chrome.storage.sync.get((value) => {
             timeOption={timeOption}
             dateOption={dateOption}
             customDateOption={customDateOption}
+            displayCustomDateOption={displayCustomDateOption}
             timeRemaining={timeRemaining}
             interval={INTERVAL}
         />,
