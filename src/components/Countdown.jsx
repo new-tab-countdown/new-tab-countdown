@@ -126,6 +126,7 @@ export default class Countdown extends Component {
                             timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, option, new Date())
                         });
                         chrome.storage.sync.set({"dateOption": option});
+                        chrome.storage.sync.set({"displayCustomDateOption": true});
                     }}
                 />.
             </div>

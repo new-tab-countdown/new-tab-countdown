@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const CustomDropdownOption = ({ customOption, onSelect, displayCustomDateOption }) => {
 
-    const TRUNCATE_LENGTH = 30;
+    const TRUNCATE_LENGTH = 20;
 
     const getDropdownDisplayText = () => {
         // Remove 'until' from the text to display.
