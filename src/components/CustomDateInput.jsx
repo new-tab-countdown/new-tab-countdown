@@ -11,6 +11,7 @@ export default class CustomDateInput extends Component {
             input: '',
             isValidDate: true,
             placeholder: "custom date",
+            helperMessage: '',
             isOnFocus: false
         };
     }
@@ -22,46 +23,42 @@ export default class CustomDateInput extends Component {
                     isValidDate: false
                 });
             } else {
+                this.setState({
+                    helperMessage: ''
+                });
                 this.props.onSubmit(this.state.input);
             }
         } else {
             this.setState({
-                isValidDate: true
+                isValidDate: true,
+                helperMessage: `"enter" to submit`
             });
         }
     }
 
     isValid(input) {
-        return CustomDateInputHelper.getCustomDate(input);
-    }
-
-    getInvalidDateMessage() {
-        return (
-            <p className="helper-message">
-                {`invalid date (example: "vacation ${DateCalculator.getExampleDateString()}")`}
-            </p>
-        );
-    }
-
-    getHelperMessage() {
-        return (
-            <p className="helper-message">
-                {`"enter" to submit`}
-            </p>
-        );
-    }
-
-    getMessage() {
-        if (this.state.isOnFocus) {
-            if (!this.state.isValidDate && this.state.input.length) {
-                return this.getInvalidDateMessage();
-            } else if (this.state.input.length) {
-                return this.getHelperMessage();
-            }
+        let customDate = CustomDateInputHelper.getCustomDate(input);
+        // If customDate is null then the parsed date is invalid.
+        if (!customDate) {
+            this.setState({
+                helperMessage: `invalid date (example: "vacation ${DateCalculator.getExampleDateString()}")`
+            });
+            return false;
         } else {
-            return null;
+            // Prevent dates that have already passed.
+            let endDate = new Date(customDate.endDate);
+            if (endDate - ((new Date())) < 0) {
+                this.setState({
+                    helperMessage: `"${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}" has already passed`
+                });
+                return false;
+            } else {
+                return true;
+            }
         }
     }
+
+
 
     render() {
         return (
@@ -74,12 +71,14 @@ export default class CustomDateInput extends Component {
                     onFocus={() => {
                         this.setState({
                             placeholder: "description + mm/dd/yyyy",
+                            helperMessage: `"enter" to submit`,
                             isOnFocus: true
                         });
                     }}
                     onBlur={() => {
                         this.setState({
                             placeholder: "custom date",
+                            helperMessage: '',
                             isOnFocus: false
                         });
                     }}
@@ -90,7 +89,9 @@ export default class CustomDateInput extends Component {
                     }}
                     onKeyDown={(e) => this.handleKeyDown(e)}
                 />
-                {this.getMessage()}
+                <p className="helper-message">
+                    {this.state.helperMessage}
+                </p>
             </span>
         );
     }
