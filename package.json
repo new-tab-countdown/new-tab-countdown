@@ -40,6 +40,7 @@
     "react-dom": "^15.4.2",
     "react-test-renderer": "^15.6.1",
     "sass-loader": "^4.1.1",
+    "sinon": "^2.3.8",
     "style-loader": "^0.13.1",
     "transform-runtime": "0.0.0",
     "webpack": "^1.14.0",
