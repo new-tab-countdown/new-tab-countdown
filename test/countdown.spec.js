@@ -29,7 +29,7 @@ describe('<Countdown />', () => {
               interval={100}
           />
         );
-        expect(wrapper.text()).toContain('hours remaining today.');
+        expect(wrapper.text().replace(/\s/g, " ")).toContain('hours remaining today');
     });
 
     it('Countdown renders with changed time and date props.', () => {
@@ -49,7 +49,7 @@ describe('<Countdown />', () => {
         expect(wrapper.props().dateOption.displayName).toBe('this week');
     });
 
-    it('Displays dropdown options when clicked.', () => {
+    it('Displays and changes dropdown options when clicked.', () => {
         const wrapper = mount(
           <Countdown
               timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
@@ -58,11 +58,14 @@ describe('<Countdown />', () => {
               interval={100}
           />
         );
-        console.info(process.env.NODE_ENV);
         wrapper.find('.time-options').simulate('click');
         expect(wrapper.find('.dropdown-option').length).toBe(4);
         wrapper.find('.seconds').simulate('click');
-        expect(wrapper.text()).toContain('seconds remaining today.');
+        expect(wrapper.text().replace(/\s/g, " ")).toContain('seconds remaining today.');
+        wrapper.find('.date-options').simulate('click');
+        expect(wrapper.find('.dropdown-option').length).toBe(5);
+        wrapper.find('.week').simulate('click');
+        expect(wrapper.text().replace(/\s/g, " ")).toContain('seconds remaining this week');
     });
 
 });

@@ -6,7 +6,7 @@ const Dropdown = ({ dropdownType, shouldDisplay, displayOption, dropdownOptions,
     const options = (dropdownOptions.options).map(
         (option, i) => (
             <span
-                className={`${option.displayName} dropdown-option`}
+                className={`${(option.displayName).replace(/\s/g, "-")} dropdown-option`}
                 key={i}
                 onClick={() => onSelect(option)}
                 >
@@ -23,8 +23,8 @@ const Dropdown = ({ dropdownType, shouldDisplay, displayOption, dropdownOptions,
     );
 
     return (
-        <span className={`${dropdownType} dropdown`} onClick={onDropdown}>
-            <span className="dropdown-value">
+        <span className="dropdown">
+            <span className={`${dropdownType} dropdown-value`} onClick={onDropdown}>
                 {displayOption.displayName}
             </span>
             {shouldDisplay ? dropdownContent : null}
