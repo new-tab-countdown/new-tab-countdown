@@ -53,6 +53,7 @@ export default class Countdown extends Component {
                     timeRemaining={this.state.timeRemaining}
                 />
                 <Dropdown
+                    dropdownType="time-options"
                     shouldDisplay={this.state.displayTimeOptionDropdown}
                     displayOption={this.state.timeOption}
                     dropdownOptions={DROPDOWN_OPTIONS.timeOptions}
@@ -68,11 +69,14 @@ export default class Countdown extends Component {
                             displayDateOptionDropdown: false,
                             timeOption: option
                         });
-                        chrome.storage.sync.set({"timeOption": option});
+                        if (!process.env.NODE_ENV) {
+                            chrome.storage.sync.set({"timeOption": option});
+                        }
                     }}
                 />
                 &nbsp;remaining&nbsp;
                 <Dropdown
+                    dropdownType="date-options"
                     shouldDisplay={this.state.displayDateOptionDropdown}
                     displayOption={this.state.dateOption}
                     dropdownOptions={DROPDOWN_OPTIONS.dateOptions}
@@ -85,7 +89,9 @@ export default class Countdown extends Component {
                                     dateOption: customDate,
                                     timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, customDate, new Date())
                                 });
-                                chrome.storage.sync.set({"dateOption": customDate});
+                                if (!process.env.NODE_ENV) {
+                                    chrome.storage.sync.set({"dateOption": customDate});
+                                }
                             }}
                         />
                     }
@@ -102,7 +108,9 @@ export default class Countdown extends Component {
                             dateOption: option,
                             timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, option, new Date())
                         });
-                        chrome.storage.sync.set({"dateOption": option});
+                        if (!process.env.NODE_ENV) {
+                            chrome.storage.sync.set({"dateOption": option});
+                        }
                     }}
                 />.
             </div>
