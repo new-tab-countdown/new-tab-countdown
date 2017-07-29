@@ -58,8 +58,6 @@ export default class CustomDateInput extends Component {
         }
     }
 
-
-
     render() {
         return (
             <span className="dropdown-option">

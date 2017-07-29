@@ -69,7 +69,7 @@ export default class Countdown extends Component {
                             displayDateOptionDropdown: false,
                             timeOption: option
                         });
-                        if (process.env.NODE_ENV.toLowerCase() === "prod") {
+                        if (!process.env.NODE_ENV) {
                             chrome.storage.sync.set({"timeOption": option});
                         }
                     }}
@@ -89,7 +89,7 @@ export default class Countdown extends Component {
                                     dateOption: customDate,
                                     timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, customDate, new Date())
                                 });
-                                if (process.env.NODE_ENV.toLowerCase() === "prod") {
+                                if (!process.env.NODE_ENV) {
                                     chrome.storage.sync.set({"dateOption": customDate});
                                 }
                             }}
@@ -108,7 +108,7 @@ export default class Countdown extends Component {
                             dateOption: option,
                             timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, option, new Date())
                         });
-                        if (process.env.NODE_ENV.toLowerCase() === "prod") {
+                        if (!process.env.NODE_ENV) {
                             chrome.storage.sync.set({"dateOption": option});
                         }
                     }}

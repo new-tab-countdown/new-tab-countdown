@@ -8,7 +8,7 @@ import { TODAY, WEEK, MONTH, YEAR } from '../src/constants/DateOptions';
 
 describe('<Countdown />', () => {
 
-    it('Countdown shallow renders with CountdownDisplay and Dropdowns.', () => {
+    it('Shallow renders with CountdownDisplay and Dropdowns.', () => {
         const wrapper = shallow(
           <Countdown
               timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
@@ -17,10 +17,10 @@ describe('<Countdown />', () => {
               interval={100}
           />
         );
-        expect(wrapper.text()).toBe('There are<CountdownDisplay /><Dropdown /> remaining <Dropdown />.');
+        expect(wrapper.text().replace(/\s/g, " ")).toBe('There are<CountdownDisplay /><Dropdown /> remaining <Dropdown />.');
     });
 
-    it('Countdown renders with default time and date props.', () => {
+    it('Renders with default time and date props.', () => {
         const wrapper = mount(
           <Countdown
               timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
@@ -32,7 +32,7 @@ describe('<Countdown />', () => {
         expect(wrapper.text().replace(/\s/g, " ")).toContain('hours remaining today');
     });
 
-    it('Countdown renders with changed time and date props.', () => {
+    it('Renders with changed time and date props.', () => {
         const wrapper = mount(
           <Countdown
               timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
@@ -64,8 +64,25 @@ describe('<Countdown />', () => {
         expect(wrapper.text().replace(/\s/g, " ")).toContain('seconds remaining today.');
         wrapper.find('.date-options').simulate('click');
         expect(wrapper.find('.dropdown-option').length).toBe(5);
-        wrapper.find('.week').simulate('click');
+        wrapper.find('.this-week').simulate('click');
         expect(wrapper.text().replace(/\s/g, " ")).toContain('seconds remaining this week');
+    });
+
+    it('Displays and formats custom end date input.', () => {
+        const wrapper = mount(
+          <Countdown
+              timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
+              dateOption={DROPDOWN_OPTIONS.dateOptions.defaultValue}
+              timeRemaining={10}
+              interval={100}
+          />
+        );
+        wrapper.find('.date-options').simulate('click');
+        expect(wrapper.find('.custom-date-input').prop('placeholder')).toBe('custom date');
+        wrapper.find('.custom-date-input').simulate('focus');
+        expect(wrapper.find('.custom-date-input').prop('placeholder')).toBe('description + mm/dd/yyyy');
+        wrapper.find('.custom-date-input').simulate('blur');
+        expect(wrapper.find('.custom-date-input').prop('placeholder')).toBe('custom date');
     });
 
 });
