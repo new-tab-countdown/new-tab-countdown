@@ -14,6 +14,32 @@ export default class CustomDateInput extends Component {
             helperMessage: '',
             isOnFocus: false
         };
+        this.onFocus = this.onFocus.bind(this);
+        this.onBlur = this.onBlur.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
+    }
+
+    onFocus() {
+        this.setState({
+            placeholder: "description + mm/dd/yyyy",
+            helperMessage: `"enter" to submit`,
+            isOnFocus: true
+        });
+    }
+
+    onBlur() {
+        this.setState({
+            placeholder: "custom date",
+            helperMessage: '',
+            isOnFocus: false
+        });
+    }
+
+    onChange(e) {
+        this.setState({
+            input: e.target.value
+        });
     }
 
     handleKeyDown(e) {
@@ -66,26 +92,10 @@ export default class CustomDateInput extends Component {
                     type="text"
                     maxLength={35}
                     placeholder={this.state.placeholder}
-                    onFocus={() => {
-                        this.setState({
-                            placeholder: "description + mm/dd/yyyy",
-                            helperMessage: `"enter" to submit`,
-                            isOnFocus: true
-                        });
-                    }}
-                    onBlur={() => {
-                        this.setState({
-                            placeholder: "custom date",
-                            helperMessage: '',
-                            isOnFocus: false
-                        });
-                    }}
-                    onChange={(e) => {
-                        this.setState({
-                            input: e.target.value
-                        });
-                    }}
-                    onKeyDown={(e) => this.handleKeyDown(e)}
+                    onFocus={this.onFocus}
+                    onBlur={this.onBlur}
+                    onChange={this.onChange}
+                    onKeyDown={this.handleKeyDown}
                 />
                 <p className="helper-message">
                     {this.state.helperMessage}

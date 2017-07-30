@@ -22,6 +22,11 @@ export default class Countdown extends Component {
             dateOption: props.dateOption,
             timeRemaining: props.timeRemaining
         };
+        this.onTimeOptionsDropdown = this.onTimeOptionsDropdown.bind(this);
+        this.onTimeOptionsSelect = this.onTimeOptionsSelect.bind(this);
+        this.onCustomDateSubmit = this.onCustomDateSubmit.bind(this);
+        this.onDateOptionsDropdown = this.onDateOptionsDropdown.bind(this);
+        this.onDateOptionsSelect = this.onDateOptionsSelect.bind(this);
     }
 
     componentDidMount() {
@@ -37,6 +42,55 @@ export default class Countdown extends Component {
                 });
             }
         });
+    }
+
+    onTimeOptionsDropdown() {
+        this.setState({
+            displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
+            displayDateOptionDropdown: false
+        });
+    }
+
+    onTimeOptionsSelect(option) {
+        this.setState({
+            displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
+            displayDateOptionDropdown: false,
+            timeOption: option
+        });
+        if (!process.env.NODE_ENV) {
+            chrome.storage.sync.set({"timeOption": option});
+        }
+    }
+
+    onCustomDateSubmit(input) {
+        let customDate = CustomDateInputHelper.getCustomDate(input);
+        this.setState({
+            displayDateOptionDropdown: false,
+            dateOption: customDate,
+            timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, customDate, new Date())
+        });
+        if (!process.env.NODE_ENV) {
+            chrome.storage.sync.set({"dateOption": customDate});
+        }
+    }
+
+    onDateOptionsDropdown() {
+        this.setState({
+            displayTimeOptionDropdown: false,
+            displayDateOptionDropdown: !this.state.displayDateOptionDropdown
+        });
+    }
+
+    onDateOptionsSelect(option) {
+        this.setState({
+            displayTimeOptionDropdown: false,
+            displayDateOptionDropdown: !this.state.displayDateOptionDropdown,
+            dateOption: option,
+            timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, option, new Date())
+        });
+        if (!process.env.NODE_ENV) {
+            chrome.storage.sync.set({"dateOption": option});
+        }
     }
 
     render() {
@@ -57,22 +111,8 @@ export default class Countdown extends Component {
                     shouldDisplay={this.state.displayTimeOptionDropdown}
                     displayOption={this.state.timeOption}
                     dropdownOptions={DROPDOWN_OPTIONS.timeOptions}
-                    onDropdown={() => {
-                        this.setState({
-                            displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
-                            displayDateOptionDropdown: false
-                        });
-                    }}
-                    onSelect={(option) => {
-                        this.setState({
-                            displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
-                            displayDateOptionDropdown: false,
-                            timeOption: option
-                        });
-                        if (!process.env.NODE_ENV) {
-                            chrome.storage.sync.set({"timeOption": option});
-                        }
-                    }}
+                    onDropdown={this.onTimeOptionsDropdown}
+                    onSelect={this.onTimeOptionsSelect}
                 />
                 &nbsp;remaining&nbsp;
                 <Dropdown
@@ -82,36 +122,11 @@ export default class Countdown extends Component {
                     dropdownOptions={DROPDOWN_OPTIONS.dateOptions}
                     customDropdownOption={
                         <CustomDateInput
-                            onSubmit={(input) => {
-                                let customDate = CustomDateInputHelper.getCustomDate(input);
-                                this.setState({
-                                    displayDateOptionDropdown: false,
-                                    dateOption: customDate,
-                                    timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, customDate, new Date())
-                                });
-                                if (!process.env.NODE_ENV) {
-                                    chrome.storage.sync.set({"dateOption": customDate});
-                                }
-                            }}
+                            onSubmit={this.onCustomDateSubmit}
                         />
                     }
-                    onDropdown={() => {
-                        this.setState({
-                            displayTimeOptionDropdown: false,
-                            displayDateOptionDropdown: !this.state.displayDateOptionDropdown
-                        });
-                    }}
-                    onSelect={(option) => {
-                        this.setState({
-                            displayTimeOptionDropdown: false,
-                            displayDateOptionDropdown: !this.state.displayDateOptionDropdown,
-                            dateOption: option,
-                            timeRemaining: TimeCalculator.computeTimeRemaining(this.state.timeOption, option, new Date())
-                        });
-                        if (!process.env.NODE_ENV) {
-                            chrome.storage.sync.set({"dateOption": option});
-                        }
-                    }}
+                    onDropdown={this.onDateOptionsDropdown}
+                    onSelect={this.onDateOptionsSelect}
                 />.
             </div>
         );
