@@ -1,7 +1,7 @@
 {
     "name": "Calendar Countdown",
     "description": "Countdown time remaining in the day, week, month, or year.",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "manifest_version": 2,
     "icons": {
         "48": "extension-icons/Clock-48.png",
