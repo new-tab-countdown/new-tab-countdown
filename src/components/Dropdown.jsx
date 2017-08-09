@@ -36,9 +36,20 @@ const Dropdown = ({ dropdownType, shouldDisplay, displayOption, dropdownOptions,
 Dropdown.propTypes = {
     dropdownType: PropTypes.string,
     shouldDisplay: PropTypes.bool.isRequired,
-    displayOption: PropTypes.object.isRequired,
-    dropdownOptions: PropTypes.object.isRequired,
-    customDropdownOption: PropTypes.object,
+    displayOption: PropTypes.shape({
+        displayName: PropTypes.string.isRequired,
+        toFixed: PropTypes.number,
+        convertFromMill: PropTypes.number
+    }).isRequired,
+    dropdownOptions: PropTypes.shape({
+        defaultValue: PropTypes.shape({
+            displayName: PropTypes.string.isRequired,
+            toFixed: PropTypes.number,
+            convertFromMill: PropTypes.number
+        }).isRequired,
+        options: PropTypes.array.isRequired
+    }).isRequired,
+    customDropdownOption: PropTypes.element,
     onDropdown: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired
 };

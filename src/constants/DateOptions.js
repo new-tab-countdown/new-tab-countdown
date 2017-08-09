@@ -1,15 +1,9 @@
-export const TODAY = {
-    displayName: 'today'
-}
+import DateOption from '../common/DateOption';
 
-export const WEEK = {
-    displayName: 'this week'
-}
+export const TODAY = new DateOption('today');
 
-export const MONTH = {
-    displayName: 'this month'
-}
+export const WEEK = new DateOption('this week');
 
-export const YEAR = {
-    displayName: 'this year'
-}
+export const MONTH = new DateOption('this month');
+
+export const YEAR = new DateOption('this year');

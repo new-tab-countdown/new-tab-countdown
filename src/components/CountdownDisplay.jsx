@@ -12,7 +12,11 @@ const CountdownDisplay = ({ timeOption, timeRemaining }) => {
 };
 
 CountdownDisplay.propTypes = {
-    timeOption: PropTypes.object.isRequired,
+    timeOption: PropTypes.PropTypes.shape({
+        displayName: PropTypes.string.isRequired,
+        toFixed: PropTypes.number.isRequired,
+        convertFromMill: PropTypes.number.isRequired
+    }).isRequired,
     timeRemaining: PropTypes.number.isRequired
 };
 
