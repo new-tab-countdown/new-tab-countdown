@@ -48,14 +48,14 @@ export default class DateCalculator {
     }
 
     static getEndDateFromDateOption(dateOption) {
-        switch (dateOption.displayName) {
-            case TODAY.displayName:
+        switch (dateOption.timeUnit) {
+            case TODAY.timeUnit:
                 return this.getStartOfTomorrow();
-            case WEEK.displayName:
+            case WEEK.timeUnit:
                 return this.getStartOfNextWeek();
-            case MONTH.displayName:
+            case MONTH.timeUnit:
                 return this.getStartOfNextMonth();
-            case YEAR.displayName:
+            case YEAR.timeUnit:
                 return this.getStartOfNextYear();
             default:
                 return new Date(dateOption);

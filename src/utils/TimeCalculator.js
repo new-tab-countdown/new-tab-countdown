@@ -4,12 +4,7 @@ export default class TimeCalculator {
 
     static computeTimeRemaining(timeOption, dateOption, now) {
         let endDate = dateOption.endDate ? DateCalculator.getEndDateFromDateOption(dateOption.endDate) : DateCalculator.getEndDateFromDateOption(dateOption);
-        if (endDate === null) {
-            return null;
-        } else {
-            let ms = this.timeRemainingMill(endDate, now);
-            return ms;
-        }
+        return endDate === null ? null : this.timeRemainingMill(endDate, now);
     }
 
     static timeRemainingMill(endDate, now) {
