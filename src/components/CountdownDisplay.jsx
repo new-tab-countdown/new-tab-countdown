@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CountdownDisplay = ({ timeOption, timeRemaining }) => {
+const CountdownDisplay = ({
+    timeOption,
+    timeRemaining
+}) => {
 
     return (
         <span className="time-remaining">

@@ -1,9 +1,9 @@
-import '../styles/site.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Countdown from './Countdown';
 import { DROPDOWN_OPTIONS } from '../constants/DropdownOptions';
 import TimeCalculator from '../utils/TimeCalculator';
+import '../styles/site.scss';
 
 chrome.storage.sync.get((value) => {
     let timeOption = (value && value.timeOption) ? value.timeOption : DROPDOWN_OPTIONS.timeOptions.defaultValue;

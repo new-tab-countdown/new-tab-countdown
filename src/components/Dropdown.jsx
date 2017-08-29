@@ -1,7 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Dropdown = ({ dropdownType, shouldDisplay, displayOption, dropdownOptions, customDropdownOption, onDropdown, onSelect }) => {
+const Dropdown = ({
+    dropdownType,
+    shouldDisplay,
+    displayOption,
+    dropdownOptions,
+    customDropdownOption,
+    onDropdown,
+    onSelect
+}) => {
 
     const options = (dropdownOptions.options).map(
         (option, i) => (
@@ -9,7 +17,7 @@ const Dropdown = ({ dropdownType, shouldDisplay, displayOption, dropdownOptions,
                 className={`${(option.displayName).replace(/\s/g, "-")} dropdown-option`}
                 key={i}
                 onClick={() => onSelect(option)}
-                >
+            >
                 {option.displayName}
             </span>
         )
