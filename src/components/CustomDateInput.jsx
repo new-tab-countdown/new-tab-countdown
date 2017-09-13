@@ -5,6 +5,12 @@ import CustomDateInputHelper from '../utils/CustomDateInputHelper';
 
 export default class CustomDateInput extends Component {
 
+    static get propTypes() {
+        return {
+            onSubmit: PropTypes.func.isRequired
+        }
+    }
+
     constructor() {
         super();
         this.state = {
@@ -14,13 +20,13 @@ export default class CustomDateInput extends Component {
             helperMessage: '',
             isOnFocus: false
         };
-        this.onFocus = this.onFocus.bind(this);
-        this.onBlur = this.onBlur.bind(this);
-        this.onChange = this.onChange.bind(this);
-        this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.onFocus = this._onFocus.bind(this);
+        this.onBlur = this._onBlur.bind(this);
+        this.onChange = this._onChange.bind(this);
+        this.handleKeyDown = this._handleKeyDown.bind(this);
     }
 
-    onFocus() {
+    _onFocus() {
         this.setState({
             placeholder: "description + mm/dd/yyyy",
             helperMessage: `"enter" to submit`,
@@ -28,7 +34,7 @@ export default class CustomDateInput extends Component {
         });
     }
 
-    onBlur() {
+    _onBlur() {
         this.setState({
             placeholder: "custom date",
             helperMessage: '',
@@ -36,15 +42,15 @@ export default class CustomDateInput extends Component {
         });
     }
 
-    onChange(e) {
+    _onChange(e) {
         this.setState({
             input: e.target.value
         });
     }
 
-    handleKeyDown(e) {
+    _handleKeyDown(e) {
         if (e.key.toLowerCase() === "enter") {
-            if (!this.isValid(this.state.input)) {
+            if (!this._isValid(this.state.input)) {
                 this.setState({
                     isValidDate: false
                 });
@@ -62,7 +68,7 @@ export default class CustomDateInput extends Component {
         }
     }
 
-    isValid(input) {
+    _isValid(input) {
         let customDate = CustomDateInputHelper.getCustomDate(input);
         // If customDate is null then the parsed date is invalid.
         if (!customDate) {
@@ -104,8 +110,4 @@ export default class CustomDateInput extends Component {
         );
     }
 
-}
-
-CustomDateInput.propTypes = {
-    onSubmit: PropTypes.func.isRequired
 }

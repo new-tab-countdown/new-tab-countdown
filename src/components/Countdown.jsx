@@ -7,11 +7,26 @@ import Dropdown from './Dropdown';
 import CustomDateInput from './CustomDateInput';
 import CustomDateInputHelper from '../utils/CustomDateInputHelper';
 
-/*
+/**
 The desired text to display is:
 "There are `n` [seconds | minutes | hours | days] remaining [today | this week | this month | this year | custom date {description + date}]."
 */
 export default class Countdown extends Component {
+
+    static get propTypes() {
+        return {
+            timeOption: PropTypes.shape({
+                displayName: PropTypes.string.isRequired,
+                toFixed: PropTypes.number.isRequired,
+                convertFromMill: PropTypes.number.isRequired
+            }),
+            dateOption: PropTypes.shape({
+                displayName: PropTypes.string.isRequired
+            }),
+            timeRemaining: PropTypes.number.isRequired,
+            interval: PropTypes.number
+        }
+    }
 
     constructor(props) {
         super(props);
@@ -22,11 +37,11 @@ export default class Countdown extends Component {
             dateOption: props.dateOption,
             timeRemaining: props.timeRemaining
         };
-        this.onTimeOptionsDropdown = this.onTimeOptionsDropdown.bind(this);
-        this.onTimeOptionsSelect = this.onTimeOptionsSelect.bind(this);
-        this.onCustomDateSubmit = this.onCustomDateSubmit.bind(this);
-        this.onDateOptionsDropdown = this.onDateOptionsDropdown.bind(this);
-        this.onDateOptionsSelect = this.onDateOptionsSelect.bind(this);
+        this.onTimeOptionsDropdown = this._onTimeOptionsDropdown.bind(this);
+        this.onTimeOptionsSelect = this._onTimeOptionsSelect.bind(this);
+        this.onCustomDateSubmit = this._onCustomDateSubmit.bind(this);
+        this.onDateOptionsDropdown = this._onDateOptionsDropdown.bind(this);
+        this.onDateOptionsSelect = this._onDateOptionsSelect.bind(this);
     }
 
     componentDidMount() {
@@ -48,14 +63,14 @@ export default class Countdown extends Component {
         });
     }
 
-    onTimeOptionsDropdown() {
+    _onTimeOptionsDropdown() {
         this.setState({
             displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
             displayDateOptionDropdown: false
         });
     }
 
-    onTimeOptionsSelect(option) {
+    _onTimeOptionsSelect(option) {
         this.setState({
             displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
             displayDateOptionDropdown: false,
@@ -66,7 +81,7 @@ export default class Countdown extends Component {
         }
     }
 
-    onCustomDateSubmit(input) {
+    _onCustomDateSubmit(input) {
         let customDate = CustomDateInputHelper.getCustomDate(input);
         this.setState({
             displayDateOptionDropdown: false,
@@ -82,14 +97,14 @@ export default class Countdown extends Component {
         }
     }
 
-    onDateOptionsDropdown() {
+    _onDateOptionsDropdown() {
         this.setState({
             displayTimeOptionDropdown: false,
             displayDateOptionDropdown: !this.state.displayDateOptionDropdown
         });
     }
 
-    onDateOptionsSelect(option) {
+    _onDateOptionsSelect(option) {
         this.setState({
             displayTimeOptionDropdown: false,
             displayDateOptionDropdown: !this.state.displayDateOptionDropdown,
@@ -148,17 +163,4 @@ export default class Countdown extends Component {
         );
     }
 
-}
-
-Countdown.propTypes = {
-    timeOption: PropTypes.shape({
-        displayName: PropTypes.string.isRequired,
-        toFixed: PropTypes.number.isRequired,
-        convertFromMill: PropTypes.number.isRequired
-    }).isRequired,
-    dateOption: PropTypes.shape({
-        displayName: PropTypes.string.isRequired
-    }).isRequired,
-    timeRemaining: PropTypes.number.isRequired,
-    interval: PropTypes.number.isRequired
 }
