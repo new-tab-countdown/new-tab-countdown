@@ -12,7 +12,7 @@ chrome.storage.sync.get((value) => {
     const INTERVAL = 100;
     ReactDOM.render(
         <Countdown
-            className="countdown"
+            className='countdown'
             timeOption={timeOption}
             dateOption={dateOption}
             timeRemaining={timeRemaining}

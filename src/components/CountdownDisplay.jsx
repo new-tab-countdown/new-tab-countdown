@@ -7,8 +7,8 @@ const CountdownDisplay = ({
 }) => {
 
     return (
-        <span className="time-remaining">
-            &nbsp;{timeRemaining ? (timeRemaining / timeOption.convertFromMill).toFixed(timeOption.toFixed) : "ಠ_ಠ"}&nbsp;
+        <span className='time-remaining'>
+            &nbsp;{timeRemaining ? (timeRemaining / timeOption.convertFromMill).toFixed(timeOption.toFixed) : 'ಠ_ಠ'}&nbsp;
         </span>
     );
 

@@ -9,7 +9,7 @@ import CustomDateInputHelper from '../utils/CustomDateInputHelper';
 
 /**
 The desired text to display is:
-"There are `n` [seconds | minutes | hours | days] remaining [today | this week | this month | this year | custom date {description + date}]."
+'There are `n` [seconds | minutes | hours | days] remaining [today | this week | this month | this year | custom date {description + date}].'
 */
 export default class Countdown extends Component {
 
@@ -77,7 +77,7 @@ export default class Countdown extends Component {
             timeOption: option
         });
         if (!process.env.NODE_ENV) {
-            chrome.storage.sync.set({"timeOption": option});
+            chrome.storage.sync.set({'timeOption': option});
         }
     }
 
@@ -93,7 +93,7 @@ export default class Countdown extends Component {
             )
         });
         if (!process.env.NODE_ENV) {
-            chrome.storage.sync.set({"dateOption": customDate});
+            chrome.storage.sync.set({'dateOption': customDate});
         }
     }
 
@@ -116,7 +116,7 @@ export default class Countdown extends Component {
             )
         });
         if (!process.env.NODE_ENV) {
-            chrome.storage.sync.set({"dateOption": option});
+            chrome.storage.sync.set({'dateOption': option});
         }
     }
 
@@ -131,14 +131,16 @@ export default class Countdown extends Component {
             });
         }
         return (
-            <div className="countdown">
+            <div className='countdown'>
                 There are
                 <CountdownDisplay
+                    className='countdown-display'
                     timeOption={this.state.timeOption}
                     timeRemaining={this.state.timeRemaining}
                 />
                 <Dropdown
-                    dropdownType="time-options"
+                    className='time-options-dropdown'
+                    dropdownType='time-options'
                     shouldDisplay={this.state.displayTimeOptionDropdown}
                     displayOption={this.state.timeOption}
                     dropdownOptions={DROPDOWN_OPTIONS.timeOptions}
@@ -147,12 +149,14 @@ export default class Countdown extends Component {
                 />
                 &nbsp;remaining&nbsp;
                 <Dropdown
-                    dropdownType="date-options"
+                    className='date-options-dropdown'
+                    dropdownType='date-options'
                     shouldDisplay={this.state.displayDateOptionDropdown}
                     displayOption={this.state.dateOption}
                     dropdownOptions={DROPDOWN_OPTIONS.dateOptions}
                     customDropdownOption={
                         <CustomDateInput
+                            className='custom-date-input'
                             onSubmit={this.onCustomDateSubmit}
                         />
                     }

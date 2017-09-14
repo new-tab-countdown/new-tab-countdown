@@ -17,7 +17,7 @@ describe('<Countdown />', () => {
               interval={100}
           />
         );
-        expect(wrapper.text().replace(/\s/g, " ")).toBe('There are<CountdownDisplay /><Dropdown /> remaining <Dropdown />.');
+        expect(wrapper.text().replace(/\s/g, ' ')).toBe('There are<CountdownDisplay /><Dropdown /> remaining <Dropdown />.');
     });
 
     it('Renders with default time and date props.', () => {
@@ -29,7 +29,7 @@ describe('<Countdown />', () => {
               interval={100}
           />
         );
-        expect(wrapper.text().replace(/\s/g, " ")).toContain('hours remaining today');
+        expect(wrapper.text().replace(/\s/g, ' ')).toContain('hours remaining today');
     });
 
     it('Renders with changed time and date props.', () => {
@@ -61,11 +61,11 @@ describe('<Countdown />', () => {
         wrapper.find('.time-options').simulate('click');
         expect(wrapper.find('.dropdown-option').length).toBe(4);
         wrapper.find('.seconds').simulate('click');
-        expect(wrapper.text().replace(/\s/g, " ")).toContain('seconds remaining today.');
+        expect(wrapper.text().replace(/\s/g, ' ')).toContain('seconds remaining today.');
         wrapper.find('.date-options').simulate('click');
         expect(wrapper.find('.dropdown-option').length).toBe(5);
         wrapper.find('.this-week').simulate('click');
-        expect(wrapper.text().replace(/\s/g, " ")).toContain('seconds remaining this week');
+        expect(wrapper.text().replace(/\s/g, ' ')).toContain('seconds remaining this week');
     });
 
     it('Displays and formats custom end date input.', () => {

@@ -12,9 +12,9 @@ describe('<CustomDateInput />', () => {
         );
         const input = wrapper.find('input');
         input.simulate('focus');
-        expect(wrapper.text()).toBe('\"enter\" to submit');
+        expect(wrapper.text()).toBe('\'enter\' to submit');
         wrapper.setState({ input: 'input' });
-        expect(wrapper.text()).toBe('\"enter\" to submit');
+        expect(wrapper.text()).toBe('\'enter\' to submit');
     });
 
     it('Displays error helper message.', () => {
@@ -55,12 +55,12 @@ describe('<CustomDateInput />', () => {
         input.simulate('keyDown', { key: 'enter' });
         expect(wrapper.text()).toContain('invalid date');
         input.simulate('keyDown', { key: 'backspace' });
-        expect(wrapper.text()).toBe('\"enter\" to submit');
+        expect(wrapper.text()).toBe('\'enter\' to submit');
         wrapper.setState({ input: 'old date 1/1/2000' });
         input.simulate('keyDown', { key: 'enter' });
         expect(wrapper.text()).toContain('has already passed');
         input.simulate('keyDown', { key: 'backspace' });
-        expect(wrapper.text()).toBe('\"enter\" to submit');
+        expect(wrapper.text()).toBe('\'enter\' to submit');
     });
 
 });
