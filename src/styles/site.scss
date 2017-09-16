@@ -16,13 +16,19 @@ body {
   cursor: default;
 }
 
+.countdown-list {
+    width: 99vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .countdown {
-  width: 99vw;
-  height: 80vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .dropdown {
+    padding-top: 25px;
+    padding-bottom: 15px;
+    .dropdown {
       display: inline-block;
       position: relative;
       color: $secondary-color;
@@ -31,6 +37,7 @@ body {
       cursor: pointer;
       .dropdown-options {
           display: block;
+          background-color: white;
           position: absolute;
           z-index: 1;
           .dropdown-option {
