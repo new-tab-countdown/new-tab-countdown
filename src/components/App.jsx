@@ -24,7 +24,7 @@ chrome.storage.sync.get((value) => {
         const defaultCountdown = {
             'id': 0,
             'timeOption': DROPDOWN_OPTIONS.timeOptions.defaultValue,
-            'dateOption': DROPDOWN_OPTIONS.dateOptions.defaultValue
+            'dateOption': DROPDOWN_OPTIONS.dateOptions.defaultValue,
         };
         chrome.storage.sync.set({'countdownList': [defaultCountdown]}, () => {
             chrome.storage.sync.get((defaultValue) => {

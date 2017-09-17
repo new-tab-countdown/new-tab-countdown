@@ -36,6 +36,7 @@ export default class Countdown extends Component {
             }).isRequired,
             dateOption: PropTypes.shape({
                 displayName: PropTypes.string,
+                timeUnit: PropTypes.string,
             }).isRequired,
             interval: PropTypes.number.isRequired,
         }
@@ -54,6 +55,8 @@ export default class Countdown extends Component {
         this.onCustomDateSubmit = this._onCustomDateSubmit.bind(this);
         this.onDateOptionsDropdown = this._onDateOptionsDropdown.bind(this);
         this.onDateOptionsSelect = this._onDateOptionsSelect.bind(this);
+        this.onDeleteCountdown = this._onDeleteCountdown.bind(this);
+        this.showDeleteCountdown = this._showDeleteCountdown.bind(this);
     }
 
     componentWillMount() {
@@ -67,13 +70,17 @@ export default class Countdown extends Component {
     }
 
     componentDidMount() {
-        setInterval(() => {
+        const intervalId = setInterval(() => {
             this.setState({
                 timeRemaining: (this.state.timeRemaining - this.props.interval),
             });
         }, this.props.interval);
+        this.setState({
+            intervalId: intervalId,
+        });
         document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible') {
+            if (document.visibilityState === 'visible' && this.state.intervalId) {
+                console.info(this.state.intervalId);
                 this.setState({
                     timeRemaining: TimeCalculator.computeTimeRemaining(
                         this.state.timeOption,
@@ -83,6 +90,10 @@ export default class Countdown extends Component {
                 });
             }
         });
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.intervalId);
     }
 
     _onTimeOptionsDropdown() {
@@ -97,10 +108,11 @@ export default class Countdown extends Component {
             displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
             displayDateOptionDropdown: false,
             timeOption: option,
+        }, () => {
+            if (!process.env.NODE_ENV) {
+                updateCountdown(this.props.id, 'timeOption', this.state.timeOption);
+            }
         });
-        if (!process.env.NODE_ENV) {
-            updateCountdown(this.props.id, 'timeOption', option);
-        }
     }
 
     _onCustomDateSubmit(input) {
@@ -113,10 +125,11 @@ export default class Countdown extends Component {
                 customDate,
                 new Date(),
             ),
+        }, () => {
+            if (!process.env.NODE_ENV) {
+                updateCountdown(this.props.id, 'dateOption', this.state.dateOption);
+            }
         });
-        if (!process.env.NODE_ENV) {
-            updateCountdown(this.props.id, 'dateOption', customDate);
-        }
     }
 
     _onDateOptionsDropdown() {
@@ -136,10 +149,26 @@ export default class Countdown extends Component {
                 option,
                 new Date(),
             ),
+        }, () => {
+            if (!process.env.NODE_ENV) {
+                updateCountdown(this.props.id, 'dateOption', this.state.dateOption);
+            }
         });
-        if (!process.env.NODE_ENV) {
-            updateCountdown(this.props.id, 'dateOption', option);
+    }
+
+    _onDeleteCountdown() {
+        this.props.deleteCountdown(this.props.id);
+    }
+
+    _showDeleteCountdown() {
+        if (this.props.showDeleteCountdown) {
+            return (
+                <span onClick={this.onDeleteCountdown}>
+                    &#x02297;
+                </span>
+            );
         }
+        return null;
     }
 
     render() {
@@ -185,6 +214,7 @@ export default class Countdown extends Component {
                     onDropdown={this.onDateOptionsDropdown}
                     onSelect={this.onDateOptionsSelect}
                 />.
+                {this.showDeleteCountdown()}
             </div>
         );
     }

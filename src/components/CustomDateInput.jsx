@@ -18,7 +18,7 @@ export default class CustomDateInput extends Component {
             isValidDate: true,
             placeholder: 'custom date',
             helperMessage: '',
-            isOnFocus: false
+            isOnFocus: false,
         };
         this.onFocus = this._onFocus.bind(this);
         this.onBlur = this._onBlur.bind(this);
@@ -30,7 +30,7 @@ export default class CustomDateInput extends Component {
         this.setState({
             placeholder: 'description + mm/dd/yyyy',
             helperMessage: `'enter' to submit`,
-            isOnFocus: true
+            isOnFocus: true,
         });
     }
 
@@ -38,13 +38,13 @@ export default class CustomDateInput extends Component {
         this.setState({
             placeholder: 'custom date',
             helperMessage: '',
-            isOnFocus: false
+            isOnFocus: false,
         });
     }
 
     _onChange(e) {
         this.setState({
-            input: e.target.value
+            input: e.target.value,
         });
     }
 
@@ -52,18 +52,18 @@ export default class CustomDateInput extends Component {
         if (e.key.toLowerCase() === 'enter') {
             if (!this._isValid(this.state.input)) {
                 this.setState({
-                    isValidDate: false
+                    isValidDate: false,
                 });
             } else {
                 this.setState({
-                    helperMessage: ''
+                    helperMessage: '',
                 });
                 this.props.onSubmit(this.state.input);
             }
         } else {
             this.setState({
                 isValidDate: true,
-                helperMessage: `'enter' to submit`
+                helperMessage: `'enter' to submit`,
             });
         }
     }
@@ -73,7 +73,7 @@ export default class CustomDateInput extends Component {
         // If customDate is null then the parsed date is invalid.
         if (!customDate) {
             this.setState({
-                helperMessage: `invalid date (example: 'vacation ${DateCalculator.getExampleDateString()}')`
+                helperMessage: `invalid date (example: 'vacation ${DateCalculator.getExampleDateString()}')`,
             });
             return false;
         } else {
@@ -81,7 +81,7 @@ export default class CustomDateInput extends Component {
             let endDate = new Date(customDate.endDate);
             if (endDate - ((new Date())) < 0) {
                 this.setState({
-                    helperMessage: `'${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}' has already passed`
+                    helperMessage: `'${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}' has already passed`,
                 });
                 return false;
             } else {
