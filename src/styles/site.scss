@@ -23,6 +23,14 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    .add-countdown-text {
+        cursor: pointer;
+        color: $secondary-color;
+        border-bottom: 1px dotted;
+        &:hover {
+            color: darken($secondary-color, 40%);
+        }
+    }
 }
 
 .countdown {

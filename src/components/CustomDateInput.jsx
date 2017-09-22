@@ -29,7 +29,7 @@ export default class CustomDateInput extends Component {
     _onFocus() {
         this.setState({
             placeholder: 'description + mm/dd/yyyy',
-            helperMessage: `'enter' to submit`,
+            helperMessage: `"enter" to submit`,
             isOnFocus: true,
         });
     }
