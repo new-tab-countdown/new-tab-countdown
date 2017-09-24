@@ -10,7 +10,7 @@ chrome.storage.sync.get((value) => {
     ReactDOM.render(
         <CountdownList
             countdownList={value && value.countdownList ? value.countdownList : undefined}
-            interval={INTERVAL}
+            intervalDuration={INTERVAL}
             maxNumCountdown={MAX_NUM_COUNTDOWN}
         />,
         document.getElementById('container')

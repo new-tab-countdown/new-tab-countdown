@@ -26,9 +26,9 @@ export default class Countdown extends Component {
                 displayName: PropTypes.string,
                 timeUnit: PropTypes.string,
             }).isRequired,
-            interval: PropTypes.number.isRequired,
-            deleteCountdown: PropTypes.func.isRequired,
+            now: PropTypes.object.isRequired,
             enableDeleteCountdown: PropTypes.bool.isRequired,
+            deleteCountdown: PropTypes.func.isRequired,
         }
     }
 
@@ -38,53 +38,13 @@ export default class Countdown extends Component {
             displayTimeOptionDropdown: false,
             displayDateOptionDropdown: false,
         };
-        this.onVisibilityChange = this._onVisibilityChange.bind(this);
         this.onTimeOptionsDropdown = this._onTimeOptionsDropdown.bind(this);
         this.onTimeOptionsSelect = this._onTimeOptionsSelect.bind(this);
         this.onCustomDateSubmit = this._onCustomDateSubmit.bind(this);
         this.onDateOptionsDropdown = this._onDateOptionsDropdown.bind(this);
         this.onDateOptionsSelect = this._onDateOptionsSelect.bind(this);
-        this.onDeleteCountdown = this._onDeleteCountdown.bind(this);
         this.enableDeleteCountdown = this._enableDeleteCountdown.bind(this);
-    }
-
-    componentWillMount() {
-        this.setState({
-            timeRemaining: TimeCalculator.computeTimeRemaining(
-                this.props.timeOption,
-                this.props.dateOption,
-                new Date(),
-            ),
-        });
-    }
-
-    componentDidMount() {
-        const intervalId = setInterval(() => {
-            this.setState({
-                timeRemaining: (this.state.timeRemaining - this.props.interval),
-            });
-        }, this.props.interval);
-        this.setState({
-            intervalId: intervalId,
-        });
-        document.addEventListener('visibilitychange', this.onVisibilityChange);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.state.intervalId);
-        document.removeEventListener('visibilitychange', this.onVisibilityChange);
-    }
-
-    _onVisibilityChange() {
-        if (document.visibilityState === 'visible') {
-            this.setState({
-                timeRemaining: TimeCalculator.computeTimeRemaining(
-                    this.props.timeOption,
-                    this.props.dateOption,
-                    new Date(),
-                ),
-            });
-        }
+        this.onDeleteCountdown = this._onDeleteCountdown.bind(this);
     }
 
     _onTimeOptionsDropdown() {
@@ -107,11 +67,6 @@ export default class Countdown extends Component {
         this.props.updateDropdownOption(this.props.id, 'dateOption', customDate);
         this.setState({
             displayDateOptionDropdown: false,
-            timeRemaining: TimeCalculator.computeTimeRemaining(
-                this.props.timeOption,
-                customDate,
-                new Date(),
-            ),
         });
     }
 
@@ -127,16 +82,7 @@ export default class Countdown extends Component {
         this.setState({
             displayTimeOptionDropdown: false,
             displayDateOptionDropdown: false,
-            timeRemaining: TimeCalculator.computeTimeRemaining(
-                this.props.timeOption,
-                option,
-                new Date(),
-            ),
         });
-    }
-
-    _onDeleteCountdown() {
-        this.props.deleteCountdown(this.props.id);
     }
 
     _enableDeleteCountdown() {
@@ -150,23 +96,23 @@ export default class Countdown extends Component {
         return null;
     }
 
+    _onDeleteCountdown() {
+        this.props.deleteCountdown(this.props.id);
+    }
+
     render() {
-        if (this.state.timeRemaining < 0 && (!this.props.dateOption.endDate)) {
-            this.setState({
-                timeRemaining: TimeCalculator.computeTimeRemaining(
-                    this.props.timeOption,
-                    this.props.dateOption,
-                    new Date(),
-                ),
-            });
-        }
+        const timeRemaining = TimeCalculator.computeTimeRemaining(
+            this.props.timeOption,
+            this.props.dateOption,
+            this.props.now,
+        );
         return (
             <div className='countdown'>
                 There are
                 <CountdownDisplay
                     className='countdown-display'
                     timeOption={this.props.timeOption}
-                    timeRemaining={this.state.timeRemaining}
+                    timeRemaining={timeRemaining}
                 />
                 <Dropdown
                     className='time-options-dropdown'

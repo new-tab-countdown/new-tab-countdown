@@ -9,7 +9,7 @@ export default class CountdownList extends Component {
     static get propTypes() {
         return {
             countdownList: PropTypes.array,
-            interval: PropTypes.number.isRequired,
+            intervalDuration: PropTypes.number.isRequired,
             maxNumCountdown: PropTypes.number.isRequired,
         }
     }
@@ -34,14 +34,30 @@ export default class CountdownList extends Component {
             }).reduce((currentMax, id) => {
                 return currentMax > id ? currentMax : id;
             }) + 1 : 1,
+            now: new Date(),
             enableDeleteCountdown: false,
         };
         this.onUpdateDropdownOption = this._onUpdateDropdownOption.bind(this);
         this.getDefaultCountdown = this._getDefaultCountdown.bind(this);
         this.onAddCountdown = this._onAddCountdown.bind(this);
-        this.onDeleteCountdown = this._onDeleteCountdown.bind(this);
         this.toggleEnableDeleteCountdown = this._toggleEnableDeleteCountdown.bind(this);
+        this.onDeleteCountdown = this._onDeleteCountdown.bind(this);
         this.getCountdownList = this._getCountdownList.bind(this);
+    }
+
+    componentDidMount() {
+        const intervalId = setInterval(() => {
+            this.setState({
+                now: new Date(),
+            });
+        }, this.props.intervalDuration);
+        this.setState({
+            intervalId: intervalId,
+        });
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.intervalId);
     }
 
     _onUpdateDropdownOption(countdownId, option, updatedValue) {
@@ -83,6 +99,12 @@ export default class CountdownList extends Component {
         });
     }
 
+    _toggleEnableDeleteCountdown() {
+        this.setState({
+            enableDeleteCountdown: !this.state.enableDeleteCountdown,
+        });
+    }
+
     _onDeleteCountdown(countdownId) {
         const _countdownList = [...this.state.countdownList].filter((countdown) => {
             return countdown.id !== countdownId;
@@ -97,12 +119,6 @@ export default class CountdownList extends Component {
         });
     }
 
-    _toggleEnableDeleteCountdown() {
-        this.setState({
-            enableDeleteCountdown: !this.state.showDeleteCountdown,
-        });
-    }
-
     _getCountdownList() {
         if (this.state.countdownList.length) {
             return this.state.countdownList.map((countdown, i) => {
@@ -113,9 +129,9 @@ export default class CountdownList extends Component {
                         updateDropdownOption={this.onUpdateDropdownOption}
                         timeOption={countdown.timeOption}
                         dateOption={countdown.dateOption}
-                        interval={this.props.interval}
-                        deleteCountdown={this.onDeleteCountdown}
+                        now={this.state.now}
                         enableDeleteCountdown={this.state.enableDeleteCountdown}
+                        deleteCountdown={this.onDeleteCountdown}
                     />
                 );
             });
@@ -137,16 +153,16 @@ export default class CountdownList extends Component {
     render() {
         return (
             <div>
-                <span
+                <div
                     className='add-countdown'
                     onClick={this.onAddCountdown}>
                     &#x02295;
-                </span>
-                <span
+                </div>
+                <div
                     className='delete-countdown'
                     onClick={this.toggleEnableDeleteCountdown}>
                     &#x0229d;
-                </span>
+                </div>
                 <div className='countdown-list'>
                     {this.getCountdownList()}
                 </div>
