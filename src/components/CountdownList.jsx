@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Countdown from './Countdown';
 import { DROPDOWN_OPTIONS } from '../constants/DropdownOptions';
 import TimeCalculator from '../utils/TimeCalculator';
+import ModifyCountdown from './ModifyCountdown';
 
 export default class CountdownList extends Component {
 
@@ -45,7 +46,7 @@ export default class CountdownList extends Component {
         this.getCountdownList = this._getCountdownList.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const intervalId = setInterval(() => {
             this.setState({
                 now: new Date(),
@@ -94,6 +95,7 @@ export default class CountdownList extends Component {
             chrome.storage.sync.get((value) => {
                 this.setState({
                     countdownList: value.countdownList,
+                    enableDeleteCountdown: false,
                 });
             });
         });
@@ -137,7 +139,7 @@ export default class CountdownList extends Component {
             });
         } else {
             return (
-                <div className='no-countdowns'>
+                <div className='all-countdowns-deleted-text'>
                     ಠ_ಠ You've deleted all the countdowns!&nbsp;
                     <span
                         className='add-countdown-text'
@@ -152,17 +154,13 @@ export default class CountdownList extends Component {
 
     render() {
         return (
-            <div>
-                <div
-                    className='add-countdown'
-                    onClick={this.onAddCountdown}>
-                    &#x02295;
-                </div>
-                <div
-                    className='delete-countdown'
-                    onClick={this.toggleEnableDeleteCountdown}>
-                    &#x0229d;
-                </div>
+            <div className='content'>
+                <ModifyCountdown
+                    onAddCountdown={this.onAddCountdown}
+                    toggleEnableDeleteCountdown={this.toggleEnableDeleteCountdown}
+                    disableAddCountdown={this.state.countdownList.length === this.props.maxNumCountdown}
+                    disableToggleEnableDeleteCountdown={!this.state.countdownList.length}
+                />
                 <div className='countdown-list'>
                     {this.getCountdownList()}
                 </div>

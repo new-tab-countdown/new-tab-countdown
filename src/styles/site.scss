@@ -23,12 +23,15 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    .add-countdown-text {
-        cursor: pointer;
-        color: $secondary-color;
-        border-bottom: 1px dotted;
-        &:hover {
-            color: darken($secondary-color, 40%);
+    .all-countdowns-deleted-text {
+        font-size: 0.95em;
+        .add-countdown-text {
+            cursor: pointer;
+            color: $secondary-color;
+            border-bottom: 1px dotted;
+            &:hover {
+                color: darken($secondary-color, 40%);
+            }
         }
     }
 }
@@ -82,4 +85,44 @@ body {
           }
       }
   }
+  .enable-delete-countdown {
+      .delete-countdown {
+          align-items: center;
+          justify-content: center;
+          font-size: 0.65em;
+          color: $secondary-color;
+          padding-left: 5px;
+          cursor: pointer;
+          &:hover {
+              color: darken($secondary-color, 40%);
+          }
+      }
+  }
+}
+
+.modify-countdown {
+    color: $secondary-color;
+    font-size: 0.65em;
+    display: inline-block;
+    .add-countdown {
+        cursor: pointer;
+        &:hover {
+            color: darken($secondary-color, 40%);
+        }
+    }
+    .disabled-add-countdown {
+        cursor: default;
+        .tooltip-message {
+            padding-left: 5px;
+        }
+    }
+    .toggle-enable-delete-countdown {
+        cursor: pointer;
+        &:hover {
+            color: darken($secondary-color, 40%);
+        }
+    }
+    .disabled-toggle-enable-delete-countdown {
+        cursor: default;
+    }
 }

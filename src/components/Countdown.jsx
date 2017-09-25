@@ -6,6 +6,7 @@ import CountdownDisplay from './CountdownDisplay';
 import Dropdown from './Dropdown';
 import CustomDateInput from './CustomDateInput';
 import CustomDateInputHelper from '../utils/CustomDateInputHelper';
+import DeleteCountdown from './DeleteCountdown';
 
 /**
 The desired text to display is:
@@ -86,14 +87,12 @@ export default class Countdown extends Component {
     }
 
     _enableDeleteCountdown() {
-        if (this.props.enableDeleteCountdown) {
-            return (
-                <span onClick={this.onDeleteCountdown}>
-                    &#x02297;
-                </span>
-            );
-        }
-        return null;
+        return (
+            <DeleteCountdown
+                shouldShow={this.props.enableDeleteCountdown}
+                onDelete={this.onDeleteCountdown}
+            />
+        );
     }
 
     _onDeleteCountdown() {
@@ -139,7 +138,9 @@ export default class Countdown extends Component {
                     onDropdown={this.onDateOptionsDropdown}
                     onSelect={this.onDateOptionsSelect}
                 />.
-                {this.enableDeleteCountdown()}
+                <span className='enable-delete-countdown'>
+                    {this.enableDeleteCountdown()}
+                </span>
             </div>
         );
     }
