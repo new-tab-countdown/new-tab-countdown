@@ -17,7 +17,7 @@ export default class CountdownList extends Component {
 
     static get defaultProps() {
         const defaultCountdown = {
-            'id': 0,
+            'id': 1,
             'timeOption': DROPDOWN_OPTIONS.timeOptions.defaultValue,
             'dateOption': DROPDOWN_OPTIONS.dateOptions.defaultValue,
         };
@@ -30,15 +30,18 @@ export default class CountdownList extends Component {
         super(props);
         this.state = {
             countdownList: props.countdownList,
-            nextCountdownId: props.countdownList.length ? props.countdownList.map((countdown) => {
+            nextCountdownId: props.countdownList.map((countdown) => {
                 return countdown.id;
             }).reduce((currentMax, id) => {
                 return currentMax > id ? currentMax : id;
-            }) + 1 : 1,
+            }) + 1,
             now: new Date(),
+            countdownBeingModified: 0,
+            shouldHideDropdowns: false,
             enableDeleteCountdown: false,
         };
         this.onUpdateDropdownOption = this._onUpdateDropdownOption.bind(this);
+        this.onCountdownDropdownChange = this._onCountdownDropdownChange.bind(this);
         this.getDefaultCountdown = this._getDefaultCountdown.bind(this);
         this.onAddCountdown = this._onAddCountdown.bind(this);
         this.toggleEnableDeleteCountdown = this._toggleEnableDeleteCountdown.bind(this);
@@ -77,6 +80,14 @@ export default class CountdownList extends Component {
         });
     }
 
+    _onCountdownDropdownChange(countdownId, isBeingModified) {
+        this.setState({
+            countdownBeingModified: isBeingModified ? countdownId : 0,
+            shouldHideDropdowns: false,
+            enableDeleteCountdown: false,
+        });
+    }
+
     _getDefaultCountdown() {
         const defaultCountdown = {
             'id': this.state.nextCountdownId,
@@ -95,6 +106,8 @@ export default class CountdownList extends Component {
             chrome.storage.sync.get((value) => {
                 this.setState({
                     countdownList: value.countdownList,
+                    countdownBeingModified: 0,
+                    shouldHideDropdowns: true,
                     enableDeleteCountdown: false,
                 });
             });
@@ -103,6 +116,8 @@ export default class CountdownList extends Component {
 
     _toggleEnableDeleteCountdown() {
         this.setState({
+            countdownBeingModified: 0,
+            shouldHideDropdowns: true,
             enableDeleteCountdown: !this.state.enableDeleteCountdown,
         });
     }
@@ -129,6 +144,9 @@ export default class CountdownList extends Component {
                         key={i}
                         id={countdown.id}
                         updateDropdownOption={this.onUpdateDropdownOption}
+                        onCountdownDropdownChange={this.onCountdownDropdownChange}
+                        shouldBlur={!!this.state.countdownBeingModified && countdown.id !== this.state.countdownBeingModified}
+                        shouldHideDropdowns={this.state.shouldHideDropdowns}
                         timeOption={countdown.timeOption}
                         dateOption={countdown.dateOption}
                         now={this.state.now}

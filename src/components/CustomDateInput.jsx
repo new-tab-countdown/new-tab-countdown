@@ -84,6 +84,11 @@ export default class CustomDateInput extends Component {
                     helperMessage: `'${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}' has already passed`,
                 });
                 return false;
+            } else if (endDate - ((new Date())) > Number.MAX_SAFE_INTEGER) {
+                this.setState({
+                    helperMessage: `'${endDate.getMonth() + 1}/${endDate.getDate()}/${endDate.getFullYear()}' is too far into the future`,
+                });
+                return false;
             } else {
                 return true;
             }

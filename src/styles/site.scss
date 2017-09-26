@@ -36,6 +36,19 @@ body {
     }
 }
 
+.blurred-countdown {
+    color: lighten($secondary-color, 52%);
+    padding-top: 25px;
+    padding-bottom: 15px;
+    .dropdown {
+      display: inline-block;
+      position: relative;
+      color: lighten($secondary-color, 52%);
+      text-decoration: none;
+      cursor: pointer;
+    }
+}
+
 .countdown {
     padding-top: 25px;
     padding-bottom: 15px;
@@ -46,56 +59,58 @@ body {
       border-bottom: 1px dotted;
       text-decoration: none;
       cursor: pointer;
-      .dropdown-options {
-          display: block;
-          background-color: white;
-          position: absolute;
-          z-index: 1;
-          .dropdown-option {
-              display: block;
-              text-align: left;
-              overflow: hidden;
-              white-space: nowrap;
-              &:hover {
-                  color: darken($secondary-color, 40%);
-              }
-              .helper-message {
-                  font-size: $secondary-font-size;
-                  color: $secondary-color;
-                  padding: 0;
-                  margin: 0;
-                  cursor: default;
-              }
-          }
-      }
-      .custom-date-input {
-          font-family: $base_font;
-          font-size: $base-font-size;
-          color: $secondary-color;
-          width: 11.25em;
-          border: none;
-          cursor: pointer;
-          &:hover::-webkit-input-placeholder {
-              color: darken($secondary-color, 40%);
-          }
-          &:focus {
-              outline-width: 0;
-              border-bottom: 1px dotted;
-              cursor: auto;
-          }
-      }
-  }
-  .enable-delete-countdown {
-      .delete-countdown {
-          font-size: 0.65em;
-          color: $secondary-color;
-          padding-left: 5px;
-          position: relative;
-          bottom: 3px;
-          cursor: pointer;
-          &:hover {
-              color: darken($secondary-color, 40%);
-          }
+    }
+}
+
+.dropdown-options {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    .dropdown-option {
+        display: block;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        &:hover {
+            color: darken($secondary-color, 40%);
+        }
+        .helper-message {
+            font-size: $secondary-font-size;
+            color: $secondary-color;
+            padding: 0;
+            margin: 0;
+            cursor: default;
+        }
+    }
+}
+
+.custom-date-input {
+    font-family: $base_font;
+    font-size: $base-font-size;
+    color: $secondary-color;
+    width: 11.25em;
+    border: none;
+    cursor: pointer;
+    &:hover::-webkit-input-placeholder {
+        color: darken($secondary-color, 40%);
+    }
+    &:focus {
+        outline-width: 0;
+        border-bottom: 1px dotted;
+        cursor: auto;
+    }
+}
+
+.enable-delete-countdown {
+  .delete-countdown {
+      font-size: 0.65em;
+      color: $secondary-color;
+      padding-left: 5px;
+      position: relative;
+      bottom: 3px;
+      cursor: pointer;
+      &:hover {
+          color: darken($secondary-color, 40%);
       }
   }
 }

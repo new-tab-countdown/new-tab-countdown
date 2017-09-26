@@ -28,6 +28,9 @@ export default class Countdown extends Component {
                 timeUnit: PropTypes.string,
             }).isRequired,
             now: PropTypes.object.isRequired,
+            onCountdownDropdownChange: PropTypes.func.isRequired,
+            shouldBlur: PropTypes.bool.isRequired,
+            shouldHideDropdowns: PropTypes.bool.isRequired,
             enableDeleteCountdown: PropTypes.bool.isRequired,
             deleteCountdown: PropTypes.func.isRequired,
         }
@@ -48,10 +51,21 @@ export default class Countdown extends Component {
         this.onDeleteCountdown = this._onDeleteCountdown.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.shouldBlur || nextProps.shouldHideDropdowns) {
+            this.setState({
+                displayTimeOptionDropdown: false,
+                displayDateOptionDropdown: false,
+            });
+        }
+    }
+
     _onTimeOptionsDropdown() {
         this.setState({
             displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
             displayDateOptionDropdown: false,
+        }, () => {
+            this.props.onCountdownDropdownChange(this.props.id, this.state.displayTimeOptionDropdown);
         });
     }
 
@@ -60,6 +74,8 @@ export default class Countdown extends Component {
         this.setState({
             displayTimeOptionDropdown: false,
             displayDateOptionDropdown: false,
+        }, () => {
+            this.props.onCountdownDropdownChange(this.props.id, false);
         });
     }
 
@@ -68,6 +84,8 @@ export default class Countdown extends Component {
         this.props.updateDropdownOption(this.props.id, 'dateOption', customDate);
         this.setState({
             displayDateOptionDropdown: false,
+        }, () => {
+            this.props.onCountdownDropdownChange(this.props.id, false);
         });
     }
 
@@ -75,6 +93,8 @@ export default class Countdown extends Component {
         this.setState({
             displayTimeOptionDropdown: false,
             displayDateOptionDropdown: !this.state.displayDateOptionDropdown,
+        }, () => {
+            this.props.onCountdownDropdownChange(this.props.id, this.state.displayDateOptionDropdown);
         });
     }
 
@@ -83,6 +103,8 @@ export default class Countdown extends Component {
         this.setState({
             displayTimeOptionDropdown: false,
             displayDateOptionDropdown: false,
+        }, () => {
+            this.props.onCountdownDropdownChange(this.props.id, false);
         });
     }
 
@@ -106,7 +128,7 @@ export default class Countdown extends Component {
             this.props.now,
         );
         return (
-            <div className='countdown'>
+            <div className={`${this.props.shouldBlur ? 'blurred-' : ''}countdown`}>
                 There are
                 <CountdownDisplay
                     className='countdown-display'
