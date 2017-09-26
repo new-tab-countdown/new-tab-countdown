@@ -13,7 +13,6 @@ const DeleteCountdown = ({
                 onClick={onDelete}
             >
                 [&times;]
-                {/* &#x02297; */}
             </span>
         ) : null
     );
