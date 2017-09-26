@@ -8,13 +8,13 @@ const Dropdown = ({
     dropdownOptions,
     customDropdownOption,
     onDropdown,
-    onSelect
+    onSelect,
 }) => {
 
     const options = (dropdownOptions.options).map(
         (option, i) => (
             <span
-                className={`${(option.displayName).replace(/\s/g, "-")} dropdown-option`}
+                className={`${(option.displayName).replace(/\s/g, '-')} dropdown-option`}
                 key={i}
                 onClick={() => onSelect(option)}
             >
@@ -24,15 +24,18 @@ const Dropdown = ({
     );
 
     const dropdownContent = (
-        <span className="dropdown-options">
+        <span className='dropdown-options'>
             {options}
             {customDropdownOption}
         </span>
     );
 
     return (
-        <span className="dropdown">
-            <span className={`${dropdownType} dropdown-value`} onClick={onDropdown}>
+        <span className='dropdown'>
+            <span
+                className={`${dropdownType} dropdown-value`}
+                onClick={onDropdown}
+            >
                 {displayOption.displayName}
             </span>
             {shouldDisplay ? dropdownContent : null}
@@ -47,19 +50,19 @@ Dropdown.propTypes = {
     displayOption: PropTypes.shape({
         displayName: PropTypes.string.isRequired,
         toFixed: PropTypes.number,
-        convertFromMill: PropTypes.number
+        convertFromMill: PropTypes.number,
     }).isRequired,
     dropdownOptions: PropTypes.shape({
         defaultValue: PropTypes.shape({
             displayName: PropTypes.string.isRequired,
             toFixed: PropTypes.number,
-            convertFromMill: PropTypes.number
+            convertFromMill: PropTypes.number,
         }).isRequired,
-        options: PropTypes.array.isRequired
+        options: PropTypes.array.isRequired,
     }).isRequired,
     customDropdownOption: PropTypes.element,
     onDropdown: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired
+    onSelect: PropTypes.func.isRequired,
 };
 
 export default Dropdown;

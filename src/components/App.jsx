@@ -1,22 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Countdown from './Countdown';
+import CountdownList from './CountdownList';
 import { DROPDOWN_OPTIONS } from '../constants/DropdownOptions';
-import TimeCalculator from '../utils/TimeCalculator';
 import '../styles/site.scss';
 
+const COUNTDOWN_INTERVAL_DURATION = 100;
+const MAX_NUM_COUNTDOWN = 3;
 chrome.storage.sync.get((value) => {
-    let timeOption = (value && value.timeOption) ? value.timeOption : DROPDOWN_OPTIONS.timeOptions.defaultValue;
-    let dateOption = (value && value.dateOption) ? value.dateOption : DROPDOWN_OPTIONS.dateOptions.defaultValue;
-    let timeRemaining = TimeCalculator.computeTimeRemaining(timeOption, dateOption, new Date());
-    const INTERVAL = 100;
     ReactDOM.render(
-        <Countdown
-            className="countdown"
-            timeOption={timeOption}
-            dateOption={dateOption}
-            timeRemaining={timeRemaining}
-            interval={INTERVAL}
+        <CountdownList
+            countdownList={value && value.countdownList ? value.countdownList : undefined}
+            intervalDuration={COUNTDOWN_INTERVAL_DURATION}
+            maxNumCountdown={MAX_NUM_COUNTDOWN}
         />,
         document.getElementById('container')
     );

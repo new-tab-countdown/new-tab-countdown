@@ -6,25 +6,33 @@ import CountdownDisplay from './CountdownDisplay';
 import Dropdown from './Dropdown';
 import CustomDateInput from './CustomDateInput';
 import CustomDateInputHelper from '../utils/CustomDateInputHelper';
+import DeleteCountdown from './DeleteCountdown';
 
 /**
 The desired text to display is:
-"There are `n` [seconds | minutes | hours | days] remaining [today | this week | this month | this year | custom date {description + date}]."
+'There are `n` [seconds | minutes | hours | days] remaining [today | this week | this month | this year | custom date {description + date}].'
 */
 export default class Countdown extends Component {
 
     static get propTypes() {
         return {
+            id: PropTypes.number.isRequired,
+            updateDropdownOption: PropTypes.func.isRequired,
             timeOption: PropTypes.shape({
-                displayName: PropTypes.string.isRequired,
-                toFixed: PropTypes.number.isRequired,
-                convertFromMill: PropTypes.number.isRequired
-            }),
+                displayName: PropTypes.string,
+                toFixed: PropTypes.number,
+                convertFromMill: PropTypes.number,
+            }).isRequired,
             dateOption: PropTypes.shape({
-                displayName: PropTypes.string.isRequired
-            }),
-            timeRemaining: PropTypes.number.isRequired,
-            interval: PropTypes.number
+                displayName: PropTypes.string,
+                timeUnit: PropTypes.string,
+            }).isRequired,
+            now: PropTypes.object.isRequired,
+            onCountdownDropdownChange: PropTypes.func.isRequired,
+            shouldBlur: PropTypes.bool.isRequired,
+            shouldHideDropdowns: PropTypes.bool.isRequired,
+            enableDeleteCountdown: PropTypes.bool.isRequired,
+            deleteCountdown: PropTypes.func.isRequired,
         }
     }
 
@@ -33,132 +41,128 @@ export default class Countdown extends Component {
         this.state = {
             displayTimeOptionDropdown: false,
             displayDateOptionDropdown: false,
-            timeOption: props.timeOption,
-            dateOption: props.dateOption,
-            timeRemaining: props.timeRemaining
         };
         this.onTimeOptionsDropdown = this._onTimeOptionsDropdown.bind(this);
         this.onTimeOptionsSelect = this._onTimeOptionsSelect.bind(this);
         this.onCustomDateSubmit = this._onCustomDateSubmit.bind(this);
         this.onDateOptionsDropdown = this._onDateOptionsDropdown.bind(this);
         this.onDateOptionsSelect = this._onDateOptionsSelect.bind(this);
+        this.enableDeleteCountdown = this._enableDeleteCountdown.bind(this);
+        this.onDeleteCountdown = this._onDeleteCountdown.bind(this);
     }
 
-    componentDidMount() {
-        setInterval(() => {
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.shouldBlur || nextProps.shouldHideDropdowns) {
             this.setState({
-                timeRemaining: (this.state.timeRemaining - this.props.interval)
+                displayTimeOptionDropdown: false,
+                displayDateOptionDropdown: false,
             });
-        }, this.props.interval);
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible') {
-                this.setState({
-                    timeRemaining: TimeCalculator.computeTimeRemaining(
-                        this.state.timeOption,
-                        this.state.dateOption,
-                        new Date()
-                    )
-                });
-            }
-        });
+        }
     }
 
     _onTimeOptionsDropdown() {
         this.setState({
             displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
-            displayDateOptionDropdown: false
+            displayDateOptionDropdown: false,
+        }, () => {
+            this.props.onCountdownDropdownChange(this.props.id, this.state.displayTimeOptionDropdown);
         });
     }
 
     _onTimeOptionsSelect(option) {
+        this.props.updateDropdownOption(this.props.id, 'timeOption', option);
         this.setState({
-            displayTimeOptionDropdown: !this.state.displayTimeOptionDropdown,
+            displayTimeOptionDropdown: false,
             displayDateOptionDropdown: false,
-            timeOption: option
+        }, () => {
+            this.props.onCountdownDropdownChange(this.props.id, false);
         });
-        if (!process.env.NODE_ENV) {
-            chrome.storage.sync.set({"timeOption": option});
-        }
     }
 
     _onCustomDateSubmit(input) {
         let customDate = CustomDateInputHelper.getCustomDate(input);
+        this.props.updateDropdownOption(this.props.id, 'dateOption', customDate);
         this.setState({
             displayDateOptionDropdown: false,
-            dateOption: customDate,
-            timeRemaining: TimeCalculator.computeTimeRemaining(
-                this.state.timeOption,
-                customDate,
-                new Date()
-            )
+        }, () => {
+            this.props.onCountdownDropdownChange(this.props.id, false);
         });
-        if (!process.env.NODE_ENV) {
-            chrome.storage.sync.set({"dateOption": customDate});
-        }
     }
 
     _onDateOptionsDropdown() {
         this.setState({
             displayTimeOptionDropdown: false,
-            displayDateOptionDropdown: !this.state.displayDateOptionDropdown
+            displayDateOptionDropdown: !this.state.displayDateOptionDropdown,
+        }, () => {
+            this.props.onCountdownDropdownChange(this.props.id, this.state.displayDateOptionDropdown);
         });
     }
 
     _onDateOptionsSelect(option) {
+        this.props.updateDropdownOption(this.props.id, 'dateOption', option);
         this.setState({
             displayTimeOptionDropdown: false,
-            displayDateOptionDropdown: !this.state.displayDateOptionDropdown,
-            dateOption: option,
-            timeRemaining: TimeCalculator.computeTimeRemaining(
-                this.state.timeOption,
-                option,
-                new Date()
-            )
+            displayDateOptionDropdown: false,
+        }, () => {
+            this.props.onCountdownDropdownChange(this.props.id, false);
         });
-        if (!process.env.NODE_ENV) {
-            chrome.storage.sync.set({"dateOption": option});
-        }
+    }
+
+    _enableDeleteCountdown() {
+        return (
+            <DeleteCountdown
+                shouldShow={this.props.enableDeleteCountdown}
+                onDelete={this.onDeleteCountdown}
+            />
+        );
+    }
+
+    _onDeleteCountdown() {
+        this.props.deleteCountdown(this.props.id);
     }
 
     render() {
-        if (this.state.timeRemaining < 0 && (!this.state.dateOption.endDate)) {
-            this.setState({
-                timeRemaining: TimeCalculator.computeTimeRemaining(
-                    this.state.timeOption,
-                    this.state.dateOption,
-                    new Date()
-                )
-            });
-        }
+        const timeRemaining = TimeCalculator.computeTimeRemaining(
+            this.props.timeOption,
+            this.props.dateOption,
+            this.props.now,
+        );
         return (
-            <div className="countdown">
+            <div className={`${this.props.shouldBlur ? 'blurred-' : ''}countdown`}>
                 There are
                 <CountdownDisplay
-                    timeOption={this.state.timeOption}
-                    timeRemaining={this.state.timeRemaining}
+                    className='countdown-display'
+                    timeOption={this.props.timeOption}
+                    timeRemaining={timeRemaining}
                 />
                 <Dropdown
-                    dropdownType="time-options"
+                    className='time-options-dropdown'
+                    dropdownType='time-options'
                     shouldDisplay={this.state.displayTimeOptionDropdown}
-                    displayOption={this.state.timeOption}
+                    displayOption={this.props.timeOption}
                     dropdownOptions={DROPDOWN_OPTIONS.timeOptions}
                     onDropdown={this.onTimeOptionsDropdown}
                     onSelect={this.onTimeOptionsSelect}
                 />
                 &nbsp;remaining&nbsp;
                 <Dropdown
-                    dropdownType="date-options"
+                    className='date-options-dropdown'
+                    dropdownType='date-options'
                     shouldDisplay={this.state.displayDateOptionDropdown}
-                    displayOption={this.state.dateOption}
+                    displayOption={this.props.dateOption}
                     dropdownOptions={DROPDOWN_OPTIONS.dateOptions}
                     customDropdownOption={
                         <CustomDateInput
+                            className='custom-date-input'
                             onSubmit={this.onCustomDateSubmit}
                         />
                     }
                     onDropdown={this.onDateOptionsDropdown}
                     onSelect={this.onDateOptionsSelect}
                 />.
+                <span className='enable-delete-countdown'>
+                    {this.enableDeleteCountdown()}
+                </span>
             </div>
         );
     }
