@@ -1,4 +1,4 @@
-import { TODAY, WEEK, MONTH, YEAR } from '../constants/DateOptions';
+import { TODAY, THIS_WEEK, THIS_MONTH, THIS_YEAR } from '../constants/DateOptions';
 
 export default class DateCalculator {
 
@@ -51,11 +51,11 @@ export default class DateCalculator {
         switch (dateOption.timeUnit) {
             case TODAY.timeUnit:
                 return this.getStartOfTomorrow();
-            case WEEK.timeUnit:
+            case THIS_WEEK.timeUnit:
                 return this.getStartOfNextWeek();
-            case MONTH.timeUnit:
+            case THIS_MONTH.timeUnit:
                 return this.getStartOfNextMonth();
-            case YEAR.timeUnit:
+            case THIS_YEAR.timeUnit:
                 return this.getStartOfNextYear();
             default:
                 return new Date(dateOption);

@@ -27,7 +27,7 @@ describe('<Dropdown />', () => {
                 onSelect={() => {}}
             />
         );
-        expect(wrapper.find('.dropdown-option').length).toBe(4);
+        expect(wrapper.find('.dropdown-option').length).toBe(5);
     });
 
 });
