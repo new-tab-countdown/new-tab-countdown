@@ -1,6 +1,6 @@
 {
   "name": "calendar-countdown",
-  "version": "2.0.1",
+  "version": "2.1.1",
   "description": "Countdown time remaining in the day, week, month, year, or a custom date.",
   "repository": {
     "type": "git",
