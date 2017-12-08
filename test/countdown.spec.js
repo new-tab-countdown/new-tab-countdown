@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import Countdown from '../src/components/Countdown';
 import { DROPDOWN_OPTIONS } from '../src/constants/DropdownOptions';
 import { SECOND, MINUTE, HOUR, DAY } from '../src/constants/TimeOptions';
-import { TODAY, WEEK, MONTH, YEAR } from '../src/constants/DateOptions';
+import { TODAY, THIS_WEEK, THIS_MONTH, THIS_YEAR } from '../src/constants/DateOptions';
 
 describe('<Countdown />', () => {
 
@@ -43,7 +43,7 @@ describe('<Countdown />', () => {
         );
         wrapper.setProps({
             timeOption: SECOND,
-            dateOption: WEEK
+            dateOption: THIS_WEEK
         });
         expect(wrapper.props().timeOption.displayName).toBe('seconds');
         expect(wrapper.props().dateOption.displayName).toBe('this week');

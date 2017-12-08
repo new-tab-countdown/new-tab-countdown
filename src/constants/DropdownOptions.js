@@ -1,16 +1,16 @@
-import { SECOND, MINUTE, HOUR, DAY } from './TimeOptions';
-import { TODAY, WEEK, MONTH, YEAR } from './DateOptions';
+import { SECOND, MINUTE, HOUR, DAY, WEEK } from './TimeOptions';
+import { TODAY, THIS_WEEK, THIS_MONTH, THIS_YEAR } from './DateOptions';
 
 export const DROPDOWN_OPTIONS = {
 
     timeOptions: {
         defaultValue: HOUR,
-        options: [SECOND, MINUTE, HOUR, DAY]
+        options: [SECOND, MINUTE, HOUR, DAY, WEEK]
     },
 
     dateOptions: {
         defaultValue: TODAY,
-        options: [TODAY, WEEK, MONTH, YEAR]
+        options: [TODAY, THIS_WEEK, THIS_MONTH, THIS_YEAR]
     }
 
 }
