@@ -10,36 +10,54 @@ describe('<Countdown />', () => {
 
     it('Shallow renders with CountdownDisplay and Dropdowns.', () => {
         const wrapper = shallow(
-          <Countdown
-              timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
-              dateOption={DROPDOWN_OPTIONS.dateOptions.defaultValue}
-              timeRemaining={10}
-              interval={100}
-          />
+            <Countdown
+                id={0}
+                updateDropdownOption={() => {}}
+                timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
+                dateOption={DROPDOWN_OPTIONS.dateOptions.defaultValue}
+                now={new Date()}
+                onCountdownDropdownChange={() => {}}
+                shouldBlur={false}
+                shouldHideDropdowns={false}
+                enableDeleteCountdown={false}
+                deleteCountdown={() => {}}
+            />
         );
-        expect(wrapper.text().replace(/\s/g, ' ')).toBe('There are<CountdownDisplay /><Dropdown /> remaining <Dropdown />.');
+        expect(wrapper.text().replace(/\s/g, ' ')).toBe('There are<CountdownDisplay /><Dropdown /> remaining <Dropdown />.<DeleteCountdown />');
     });
 
     it('Renders with default time and date props.', () => {
         const wrapper = mount(
-          <Countdown
-              timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
-              dateOption={DROPDOWN_OPTIONS.dateOptions.defaultValue}
-              timeRemaining={10}
-              interval={100}
-          />
+            <Countdown
+                id={0}
+                updateDropdownOption={() => {}}
+                timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
+                dateOption={DROPDOWN_OPTIONS.dateOptions.defaultValue}
+                now={new Date()}
+                onCountdownDropdownChange={() => {}}
+                shouldBlur={false}
+                shouldHideDropdowns={false}
+                enableDeleteCountdown={false}
+                deleteCountdown={() => {}}
+            />
         );
         expect(wrapper.text().replace(/\s/g, ' ')).toContain('hours remaining today');
     });
 
     it('Renders with changed time and date props.', () => {
         const wrapper = mount(
-          <Countdown
-              timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
-              dateOption={DROPDOWN_OPTIONS.dateOptions.defaultValue}
-              timeRemaining={10}
-              interval={100}
-          />
+            <Countdown
+                id={0}
+                updateDropdownOption={() => {}}
+                timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
+                dateOption={DROPDOWN_OPTIONS.dateOptions.defaultValue}
+                now={new Date()}
+                onCountdownDropdownChange={() => {}}
+                shouldBlur={false}
+                shouldHideDropdowns={false}
+                enableDeleteCountdown={false}
+                deleteCountdown={() => {}}
+            />
         );
         wrapper.setProps({
             timeOption: SECOND,
@@ -49,33 +67,43 @@ describe('<Countdown />', () => {
         expect(wrapper.props().dateOption.displayName).toBe('this week');
     });
 
-    it('Displays and changes dropdown options when clicked.', () => {
+    it('Displays dropdown options when clicked.', () => {
         const wrapper = mount(
           <Countdown
+              id={0}
+              updateDropdownOption={() => {}}
               timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
               dateOption={DROPDOWN_OPTIONS.dateOptions.defaultValue}
-              timeRemaining={10}
-              interval={100}
+              now={new Date()}
+              onCountdownDropdownChange={() => {}}
+              shouldBlur={false}
+              shouldHideDropdowns={false}
+              enableDeleteCountdown={false}
+              deleteCountdown={() => {}}
           />
         );
         wrapper.find('.time-options').simulate('click');
-        expect(wrapper.find('.dropdown-option').length).toBe(4);
-        wrapper.find('.seconds').simulate('click');
-        expect(wrapper.text().replace(/\s/g, ' ')).toContain('seconds remaining today.');
+        expect(wrapper.find('.dropdown-option').length).toBe(5);
         wrapper.find('.date-options').simulate('click');
         expect(wrapper.find('.dropdown-option').length).toBe(5);
-        wrapper.find('.this-week').simulate('click');
-        expect(wrapper.text().replace(/\s/g, ' ')).toContain('seconds remaining this week');
+        wrapper.find('.date-options').simulate('click');
+        expect(wrapper.find('.dropdown-option').length).toBe(0);
     });
 
     it('Displays and formats custom end date input.', () => {
         const wrapper = mount(
-          <Countdown
-              timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
-              dateOption={DROPDOWN_OPTIONS.dateOptions.defaultValue}
-              timeRemaining={10}
-              interval={100}
-          />
+            <Countdown
+                id={0}
+                updateDropdownOption={() => {}}
+                timeOption={DROPDOWN_OPTIONS.timeOptions.defaultValue}
+                dateOption={DROPDOWN_OPTIONS.dateOptions.defaultValue}
+                now={new Date()}
+                onCountdownDropdownChange={() => {}}
+                shouldBlur={false}
+                shouldHideDropdowns={false}
+                enableDeleteCountdown={false}
+                deleteCountdown={() => {}}
+            />
         );
         wrapper.find('.date-options').simulate('click');
         expect(wrapper.find('.custom-date-input').prop('placeholder')).toBe('custom date');

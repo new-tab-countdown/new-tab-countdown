@@ -12,9 +12,11 @@ describe('<CustomDateInput />', () => {
         );
         const input = wrapper.find('input');
         input.simulate('focus');
-        expect(wrapper.text()).toBe('\'enter\' to submit');
+        expect(wrapper.text()).toContain('enter');
+        expect(wrapper.text()).toContain('to submit');
         wrapper.setState({ input: 'input' });
-        expect(wrapper.text()).toBe('\'enter\' to submit');
+        expect(wrapper.text()).toContain('enter');
+        expect(wrapper.text()).toContain('to submit');
     });
 
     it('Displays error helper message.', () => {
