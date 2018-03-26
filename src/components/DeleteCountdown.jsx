@@ -22,6 +22,6 @@ const DeleteCountdown = ({
 DeleteCountdown.propTypes = {
     shouldShow: PropTypes.bool,
     onDelete: PropTypes.func.isRequired,
-} ;
+};
 
 export default DeleteCountdown;
