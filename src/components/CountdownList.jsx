@@ -30,11 +30,11 @@ export default class CountdownList extends Component {
         super(props);
         this.state = {
             countdownList: props.countdownList,
-            nextCountdownId: props.countdownList.map((countdown) => {
+            nextCountdownId: props.countdownList.length ? props.countdownList.map((countdown) => {
                 return countdown.id;
             }).reduce((currentMax, id) => {
                 return currentMax > id ? currentMax : id;
-            }) + 1,
+            }) + 1 : 0,
             now: new Date(),
             countdownBeingModified: 0,
             shouldHideDropdowns: false,
