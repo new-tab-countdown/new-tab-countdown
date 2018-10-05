@@ -23,17 +23,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    .all-countdowns-deleted-text {
-        font-size: 0.95em;
-        .add-countdown-text {
-            cursor: pointer;
-            color: $secondary-color;
-            border-bottom: 1px dotted;
-            &:hover {
-                color: darken($secondary-color, 40%);
-            }
-        }
-    }
 }
 
 .blurred-countdown {
@@ -140,5 +129,18 @@ body {
     }
     .disabled-toggle-enable-delete-countdown {
         cursor: default;
+    }
+}
+
+.all-countdowns-deleted-text {
+    padding-top: 25px;
+    padding-bottom: 15px;
+    .add-countdown-text {
+        cursor: pointer;
+        color: $secondary-color;
+        border-bottom: 1px dotted;
+        &:hover {
+            color: darken($secondary-color, 40%);
+        }
     }
 }
