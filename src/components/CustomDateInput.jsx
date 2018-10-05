@@ -29,7 +29,7 @@ export default class CustomDateInput extends Component {
     _onFocus() {
         this.setState({
             placeholder: 'description + mm/dd/yyyy',
-            helperMessage: `"enter" to submit`,
+            helperMessage: `press "enter" to submit`,
             isOnFocus: true,
         });
     }
@@ -63,7 +63,7 @@ export default class CustomDateInput extends Component {
         } else {
             this.setState({
                 isValidDate: true,
-                helperMessage: `'enter' to submit`,
+                helperMessage: `press "enter" to submit`,
             });
         }
     }
