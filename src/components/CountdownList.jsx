@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Countdown from './Countdown';
 import { DROPDOWN_OPTIONS } from '../constants/DropdownOptions';
 import TimeCalculator from '../utils/TimeCalculator';
-import ModifyCountdown from './ModifyCountdown';
+import CountdownListControls from './CountdownListControls';
 
 export default class CountdownList extends Component {
 
@@ -12,6 +12,7 @@ export default class CountdownList extends Component {
             countdownList: PropTypes.array,
             intervalDuration: PropTypes.number.isRequired,
             maxNumCountdown: PropTypes.number.isRequired,
+            displayCountdownListControls: PropTypes.bool,
         }
     }
 
@@ -36,6 +37,7 @@ export default class CountdownList extends Component {
                 return currentMax > id ? currentMax : id;
             }) + 1 : 0,
             now: new Date(),
+            displayCountdownListControls: !!props.displayCountdownListControls,
             countdownBeingModified: 0,
             shouldHideDropdowns: false,
             enableDeleteCountdown: false,
@@ -43,6 +45,7 @@ export default class CountdownList extends Component {
         this.onUpdateDropdownOption = this._onUpdateDropdownOption.bind(this);
         this.onCountdownDropdownChange = this._onCountdownDropdownChange.bind(this);
         this.getDefaultCountdown = this._getDefaultCountdown.bind(this);
+        this.getCountdownListControls = this._getCountdownListControls.bind(this);
         this.onAddCountdown = this._onAddCountdown.bind(this);
         this.toggleEnableDeleteCountdown = this._toggleEnableDeleteCountdown.bind(this);
         this.onDeleteCountdown = this._onDeleteCountdown.bind(this);
@@ -71,13 +74,15 @@ export default class CountdownList extends Component {
         }).forEach((match) => {
             match[option] = updatedValue;
         });
-        chrome.storage.sync.set({'countdownList': _countdownList}, () => {
-            chrome.storage.sync.get((value) => {
-                this.setState({
-                    countdownList: value.countdownList,
+        if (chrome.storage) {
+            chrome.storage.sync.set({'countdownList': _countdownList}, () => {
+                chrome.storage.sync.get((value) => {
+                    this.setState({
+                        countdownList: value.countdownList,
+                    });
                 });
             });
-        });
+        }
     }
 
     _onCountdownDropdownChange(countdownId, isBeingModified) {
@@ -98,6 +103,21 @@ export default class CountdownList extends Component {
             nextCountdownId: this.state.nextCountdownId + 1,
         });
         return defaultCountdown;
+    }
+
+    _getCountdownListControls() {
+        if (this.state.displayCountdownListControls) {
+            return (
+                <CountdownListControls
+                    onAddCountdown={this.onAddCountdown}
+                    toggleEnableDeleteCountdown={this.toggleEnableDeleteCountdown}
+                    disableAddCountdown={this.state.countdownList.length === this.props.maxNumCountdown}
+                    disableToggleEnableDeleteCountdown={!this.state.countdownList.length}
+                />
+            );
+        } else {
+            return null;
+        }
     }
 
     _onAddCountdown() {
@@ -173,12 +193,7 @@ export default class CountdownList extends Component {
     render() {
         return (
             <div className='content'>
-                <ModifyCountdown
-                    onAddCountdown={this.onAddCountdown}
-                    toggleEnableDeleteCountdown={this.toggleEnableDeleteCountdown}
-                    disableAddCountdown={this.state.countdownList.length === this.props.maxNumCountdown}
-                    disableToggleEnableDeleteCountdown={!this.state.countdownList.length}
-                />
+                {this.getCountdownListControls()}
                 <div className='countdown-list'>
                     {this.getCountdownList()}
                 </div>

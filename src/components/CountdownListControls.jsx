@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class ModifyCountdown extends Component {
+export default class CountdownListControls extends Component {
 
     static get propTypes() {
         return {

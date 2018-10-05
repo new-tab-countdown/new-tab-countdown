@@ -16,6 +16,34 @@ body {
   cursor: default;
 }
 
+.new-tab-countdown-info {
+    padding-top: 10px;
+    padding-left: 10px;
+    .title {
+        color: $base-color;
+    }
+    .sub-title {
+        color: $base-color;
+        font-size: 0.65em;
+    }
+    .links {
+        font-size: 0.65em;
+        padding-top: 5px;
+        position: absolute;
+        .link {
+            text-decoration: none;
+            color: $secondary-color;
+            cursor: pointer;
+            &:hover {
+                border-bottom: 1px dotted;
+            }
+        }
+        .divider {
+            padding: 2px;
+        }
+    }
+}
+
 .countdown-list {
     width: 99vw;
     height: 80vh;
