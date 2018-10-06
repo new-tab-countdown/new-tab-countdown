@@ -1,7 +1,7 @@
 {
     "name": "New Tab Countdown",
     "description": "Countdown time remaining in the day, week, month, year, or a custom date.",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "manifest_version": 2,
     "icons": {
         "48": "extension-icons/Clock-48.png",

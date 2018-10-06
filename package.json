@@ -1,6 +1,6 @@
 {
   "name": "new-tab-countdown",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Countdown time remaining in the day, week, month, year, or a custom date.",
   "repository": {
     "type": "git",
