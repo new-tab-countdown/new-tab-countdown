@@ -13,6 +13,7 @@ export default class CountdownList extends Component {
             intervalDuration: PropTypes.number.isRequired,
             maxNumCountdown: PropTypes.number.isRequired,
             displayCountdownListControls: PropTypes.bool,
+            isChrome: PropTypes.bool,
         }
     }
 
@@ -74,7 +75,7 @@ export default class CountdownList extends Component {
         }).forEach((match) => {
             match[option] = updatedValue;
         });
-        if (chrome.storage) {
+        if (this.props.isChrome && chrome.storage) {
             chrome.storage.sync.set({'countdownList': _countdownList}, () => {
                 chrome.storage.sync.get((value) => {
                     this.setState({
@@ -122,16 +123,18 @@ export default class CountdownList extends Component {
 
     _onAddCountdown() {
         const _countdownList = (this.state.countdownList.length < this.props.maxNumCountdown) ? [...this.state.countdownList, this.getDefaultCountdown()] : [...this.state.countdownList];
-        chrome.storage.sync.set({'countdownList': _countdownList}, () => {
-            chrome.storage.sync.get((value) => {
-                this.setState({
-                    countdownList: value.countdownList,
-                    countdownBeingModified: 0,
-                    shouldHideDropdowns: true,
-                    enableDeleteCountdown: false,
+        if (this.props.isChrome && chrome.storage) {
+            chrome.storage.sync.set({'countdownList': _countdownList}, () => {
+                chrome.storage.sync.get((value) => {
+                    this.setState({
+                        countdownList: value.countdownList,
+                        countdownBeingModified: 0,
+                        shouldHideDropdowns: true,
+                        enableDeleteCountdown: false,
+                    });
                 });
             });
-        });
+        }
     }
 
     _toggleEnableDeleteCountdown() {
@@ -146,14 +149,16 @@ export default class CountdownList extends Component {
         const _countdownList = [...this.state.countdownList].filter((countdown) => {
             return countdown.id !== countdownId;
         });
-        chrome.storage.sync.set({'countdownList': _countdownList}, () => {
-            chrome.storage.sync.get((value) => {
-                this.setState({
-                    countdownList: value.countdownList,
-                    enableDeleteCountdown: false,
+        if (this.props.isChrome && chrome.storage) {
+            chrome.storage.sync.set({'countdownList': _countdownList}, () => {
+                chrome.storage.sync.get((value) => {
+                    this.setState({
+                        countdownList: value.countdownList,
+                        enableDeleteCountdown: false,
+                    });
                 });
             });
-        });
+        }
     }
 
     _getCountdownList() {

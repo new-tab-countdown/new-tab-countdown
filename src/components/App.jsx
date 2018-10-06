@@ -6,7 +6,8 @@ import '../styles/site.scss';
 
 const COUNTDOWN_INTERVAL_DURATION = 100;
 const MAX_NUM_COUNTDOWN = 3;
-if (chrome.storage) {
+const IS_CHROME = typeof chrome !== 'undefined';
+if (IS_CHROME && chrome.storage) {
     chrome.storage.sync.get((value) => {
         ReactDOM.render(
             <CountdownList
@@ -24,6 +25,7 @@ if (chrome.storage) {
             countdownList={undefined}
             intervalDuration={COUNTDOWN_INTERVAL_DURATION}
             maxNumCountdown={MAX_NUM_COUNTDOWN}
+            isChrome={IS_CHROME}
         />,
         document.getElementById('container')
     );

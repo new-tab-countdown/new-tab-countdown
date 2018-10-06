@@ -7,6 +7,7 @@ const NewTabCountdownHomepage = ({
     countdownList,
     intervalDuration,
     maxNumCountdown,
+    isChrome,
 }) => {
 
     return (
@@ -49,6 +50,7 @@ const NewTabCountdownHomepage = ({
                     countdownList={countdownList}
                     intervalDuration={intervalDuration}
                     maxNumCountdown={maxNumCountdown}
+                    isChrome={isChrome}
                 />
             </div>
         </div>
@@ -60,6 +62,7 @@ NewTabCountdownHomepage.propTypes = {
     countdownList: PropTypes.object,
     intervalDuration: PropTypes.number.isRequired,
     maxNumCountdown: PropTypes.number.isRequired,
+    isChrome: PropTypes.bool.isRequired,
 };
 
 export default NewTabCountdownHomepage;
