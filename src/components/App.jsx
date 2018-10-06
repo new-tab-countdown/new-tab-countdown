@@ -14,6 +14,7 @@ if (IS_CHROME && chrome.storage) {
                 countdownList={value && value.countdownList ? value.countdownList : undefined}
                 intervalDuration={COUNTDOWN_INTERVAL_DURATION}
                 maxNumCountdown={MAX_NUM_COUNTDOWN}
+                isChrome={IS_CHROME}
                 displayCountdownListControls
             />,
             document.getElementById('container')

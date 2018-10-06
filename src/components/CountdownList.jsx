@@ -12,8 +12,8 @@ export default class CountdownList extends Component {
             countdownList: PropTypes.array,
             intervalDuration: PropTypes.number.isRequired,
             maxNumCountdown: PropTypes.number.isRequired,
+            isChrome: PropTypes.bool.isRequired,
             displayCountdownListControls: PropTypes.bool,
-            isChrome: PropTypes.bool,
         }
     }
 
