@@ -109,6 +109,7 @@ body {
     width: 11.25em;
     border: none;
     cursor: pointer;
+    padding: 0;
     &:hover::-webkit-input-placeholder {
         color: darken($secondary-color, 40%);
     }

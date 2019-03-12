@@ -16,7 +16,7 @@ export default class CustomDateInput extends Component {
         this.state = {
             input: '',
             isValidDate: true,
-            placeholder: 'custom date',
+            placeholder: 'a custom date',
             helperMessage: '',
             isOnFocus: false,
         };
@@ -36,7 +36,7 @@ export default class CustomDateInput extends Component {
 
     _onBlur() {
         this.setState({
-            placeholder: 'custom date',
+            placeholder: 'a custom date',
             helperMessage: '',
             isOnFocus: false,
         });
